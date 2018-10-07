@@ -11,10 +11,15 @@ protocol device {
 	scan time 10;
 }
 
+filter export_ospf {
+	if net ~ fd00:200:7::/48 then accept;
+	if net ~ fd00:300:7::/48 then accept;
+else reject;
+}
+
 protocol ospf {
 
-  import all; #TODO Add filter
-  export all;
+    export filter export_ospf;
 	area 0.0.0.0 {
 		<%- @ospfv3["hello_itfs"].each do |val| -%>
 			interface "<%= val %>" {
