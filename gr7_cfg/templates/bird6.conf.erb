@@ -13,6 +13,8 @@ protocol device {
 
 protocol ospf {
 
+  import all; #TODO Add filter
+  export all;
 	area 0.0.0.0 {
 		<%- @ospfv3["hello_itfs"].each do |val| -%>
 			interface "<%= val %>" {
