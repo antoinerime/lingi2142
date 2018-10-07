@@ -9,10 +9,10 @@ bird6::ospfv3:
   stub_itfs: [] # Passive interfaces (e.g., LANs)
 bird6::bgp:
   static_bgp:
-    - import all
+    - import all;
     - route fd00:300:7::/48 reject
   rules:
     - local as 7
     - neighbor fd00:300::b as 300
-    - import all
+    - import ::/0
     - export where proto = "static_bgp"
