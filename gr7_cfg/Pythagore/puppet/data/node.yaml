@@ -1,0 +1,18 @@
+---
+name: Pythagore
+bird6::routing_id: 7.0.0.1
+bird6::ospfv3:
+  hello_itfs:  # Activate OSPFv3 only on these interfaces
+    - Pythagore-eth0
+    - Pythagore-eth1
+    - Pythagore-eth2
+  stub_itfs: [] # Passive interfaces (e.g., LANs)
+bird6::bgp:
+  static_bgp:
+    - import all
+    - route fd00:300:7::/48 reject
+  rules:
+    - local as 7
+    - neighbor fd00:300::b as 300
+    - import all
+    - export where proto = "static_bgp"
