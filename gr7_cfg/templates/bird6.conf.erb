@@ -13,8 +13,8 @@ protocol device {
 
 filter export_ospf {
   if net = ::/0 then accept;
-	if net ~ fd00:200:7::/48 then accept;
-	if net ~ fd00:300:7::/48 then accept;
+	if net ~ fd00:200:7:0:/52 then accept;
+	if net ~ fd00:300:7:0:/52 then accept;
 else reject;
 }
 
