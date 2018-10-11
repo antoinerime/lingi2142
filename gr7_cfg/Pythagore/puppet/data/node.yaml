@@ -7,6 +7,7 @@ bird6::ospfv3:
     - Pythagore-eth1
     - Pythagore-eth2
   stub_itfs: [] # Passive interfaces (e.g., LANs)
+bird6::main_bgp: False
 bird6::bgp:
   static_bgp:
     - route fd00:300:7::/48 reject
