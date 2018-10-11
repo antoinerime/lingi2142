@@ -4,7 +4,7 @@ class bird6 (
   String $routing_id,
   Hash $ospfv3,
   Hash $bgp={},
-  String $main_bgp = "false"
+  Boolean $main_bgp = false
 ) {
   # Get name of the node (lookup in data/node.yaml
   $node_name = lookup("name")

@@ -6,7 +6,7 @@ bird6::ospfv3:
     - Halles-eth0
     - Halles-eth1
   stub_itfs: [] # Passive interfaces (e.g., LANs)
-bird6::main_bgp: "true"
+bird6::main_bgp: true
 bird6::bgp:
   static_bgp:
     - route fd00:200:7::/48 reject
