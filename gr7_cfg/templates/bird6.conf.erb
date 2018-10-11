@@ -13,7 +13,7 @@ protocol device {
 
 filter export_ospf {
 if (source = RTS_BGP) then{
-<%- if @main_bgp != "NONE" -%>
+<%- if @main_bgp != true -%>
 	if net = ::/0 then accept;
 <%- end -%>
 }
