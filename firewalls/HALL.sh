@@ -47,7 +47,7 @@ ip6tables -A INPUT -i belnetb -p tcp -m multiport --dport 80,443 -j DROP
 # Block DHCPv6 (port:546,547 over udp) from/to Internet
 ip6tables -A INPUT -i belnetb -p udp -m multiport --dports 546,547 -j DROP
 ip6tables -A OUTPUT -o belnetb -p udp -m multiport --dports 546,547 -j DROP
-ip6tables -A FBAORWARD -i belnetb -p udp -m multiport --dports 546,547 -j DROP
+ip6tables -A FORWARD -i belnetb -p udp -m multiport --dports 546,547 -j DROP
 ip6tables -A FORWARD -o belnetb -p udp -m multiport --dports 546,547 -j DROP
 
 # Block SSH (port:22 over tcp) connection from outside
