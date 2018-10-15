@@ -108,18 +108,12 @@ ip6tables -A FORWARD -s $ADMIN3 -j ACCEPT
 # -------- IOT configuration
 #
 
-# Accept ICMPv6 (to be filtered: R, s,g)
-# ip6tables -A INPUT -p ipv6-icmp -j ACCEPT
-# ip6tables -A OUTPUT -p ipv6-icmp -j ACCEPT
-# ip6tables -A FORWARD -p ipv6-icmp -j ACCEPT
-#
 # Accept SSH connection (port:22) (to be filtered: A)
 ip6tables -A INPUT -p tcp --dport 22 -j ACCEPT
 ip6tables -A OUTPUT -p tcp --dport 22 -j ACCEPT
 ip6tables -A FORWARD -p tcp --dport 22 -j ACCEPT
 
-#Print & LOG
-ip6tables -L -vn
+#LOG
 ip6tables -A INPUT -j LOG --log-prefix "++ [INPUT] Packet dropped ++ "
 ip6tables -A OUTPUT -j LOG --log-prefix "++ [OUTPUT] Packet dropped ++ "
 ip6tables -A FORWARD -j LOG --log-prefix "++ [FORWARD] Packet dropped ++ "

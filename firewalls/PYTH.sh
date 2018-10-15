@@ -59,6 +59,8 @@ ip6tables -A INPUT -i belnetb -p tcp --dport 22 -j DROP
 # -------- ROUTER configuration
 #
 
+# Accept all the other ospf, they are comming from internet
+
 # Accept ospf (port:89) from inside the Network
 ip6tables -A INPUT -i Pythagore-eth0 -s $ROUT2 -p 89 -j ACCEPT
 ip6tables -A INPUT -i Pythagore-eth0 -s $ROUT3 -p 89 -j ACCEPT
@@ -128,8 +130,7 @@ ip6tables -A INPUT -p tcp --dport 22 -j ACCEPT
 ip6tables -A OUTPUT -p tcp --dport 22 -j ACCEPT
 ip6tables -A FORWARD -p tcp --dport 22 -j ACCEPT
 
-#Print & LOG
-ip6tables -L -vn
+#LOG
 ip6tables -A INPUT -j LOG --log-prefix "++ [INPUT] Packet dropped ++ "
 ip6tables -A OUTPUT -j LOG --log-prefix "++ [OUTPUT] Packet dropped ++ "
 ip6tables -A FORWARD -j LOG --log-prefix "++ [FORWARD] Packet dropped ++ "
