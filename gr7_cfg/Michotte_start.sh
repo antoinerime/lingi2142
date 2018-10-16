@@ -9,6 +9,6 @@ ip addr add fd00:300:7:34::4/64 dev Michotte-eth0
 ip addr add fd00:300:7:45::4/64 dev Michotte-eth1
 puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /etc/puppet/site.pp --modulepath=/puppetmodules
 
-# echo "[MICH] setting firewall"
-# firewalls/./INTERN.sh
-# echo "[MICH] firewall set"
+echo "[MICH] setting firewall"
+firewalls/./INTERN.sh
+echo "[MICH] firewall set"
