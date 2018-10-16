@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Import subnet address for router/server, admin, staff and guest
-. ADDRESS.sh
+. firewalls/ADDRESS.sh
 
 #
 # -------- Initial configuration
