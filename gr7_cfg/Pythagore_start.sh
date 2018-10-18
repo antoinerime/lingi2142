@@ -1,4 +1,12 @@
 #!/bin/bash
+
+ip route add default via fd00:200:7:12::1 table T200
+ip roue add default via fd00:300::b table T300
+
+
+ip -6 rule add from fd00:200:7::/48 table T200
+ip -6 rule add from fd00:300:7::/48 table T300
+
 ip -6 addr add fd00:300::7/48 dev belneta
 
 ip addr add fd00:200:7:21::0/64 dev Pythagore-eth0
