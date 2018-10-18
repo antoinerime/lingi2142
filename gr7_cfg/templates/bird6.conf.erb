@@ -32,7 +32,7 @@ protocol ospf {
 		<%- end -%>
 		<%- @ospfv3["stub_itfs"].each do |val| -%>
 			interface "<%= val %>" {
-				stub 1;
+				stub yes;
 			};
 		<%- end -%>
     };
