@@ -1,6 +1,6 @@
 #!/bin/bash
-ip -6 rule add from fd00:200:7::/48 table 200
-ip -6 rule add from fd00:300:7::/48 table 300
+# ip -6 rule add from fd00:200:7::/48 table 200
+# ip -6 rule add from fd00:300:7::/48 table 300
 
 ip addr add fd00:200:7:34::4/64 dev Michotte-eth0
 ip addr add fd00:200:7:45::4/64 dev Michotte-eth1
