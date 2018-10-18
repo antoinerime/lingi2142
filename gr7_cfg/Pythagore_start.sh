@@ -1,11 +1,11 @@
 #!/bin/bash
 
-ip route add default via fd00:200:7:12::1 table T2
-ip route add default via fd00:300::b table T3
+ip route add default via fd00:200:7:12::1 table 200
+ip route add default via fd00:300::b table 300
 
 
-ip -6 rule add from fd00:200:7::/48 table T2
-ip -6 rule add from fd00:300:7::/48 table T3
+ip -6 rule add from fd00:200:7::/48 table 200
+ip -6 rule add from fd00:300:7::/48 table 300
 
 ip -6 addr add fd00:300::7/48 dev belneta
 
