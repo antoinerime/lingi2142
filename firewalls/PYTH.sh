@@ -6,7 +6,6 @@
 #
 # -------- Initial configuration
 #
-
 # Erase all existing chain
 ip6tables -F INPUT
 ip6tables -F OUTPUT
@@ -58,35 +57,18 @@ ip6tables -A INPUT -i belnetb -p tcp --dport 22 -j DROP
 #
 # -------- ROUTER configuration
 #
-
 # Accept all the other ospf, they are comming from internet
 
 # Accept ospf (port:89) from inside the Network
-ip6tables -A INPUT -i Pythagore-eth0 -s $ROUT2 -p 89 -j ACCEPT
-ip6tables -A INPUT -i Pythagore-eth0 -s $ROUT3 -p 89 -j ACCEPT
-ip6tables -A INPUT -i Pythagore-eth1 -s $ROUT2 -p 89 -j ACCEPT
-ip6tables -A INPUT -i Pythagore-eth1 -s $ROUT3 -p 89 -j ACCEPT
-ip6tables -A INPUT -i Pythagore-eth2 -s $ROUT2 -p 89 -j ACCEPT
-ip6tables -A INPUT -i Pythagore-eth2 -s $ROUT3 -p 89 -j ACCEPT
-ip6tables -A OUTPUT -o Pythagore-eth0 -d $ROUT2 -p 89 -j ACCEPT
-ip6tables -A OUTPUT -o Pythagore-eth0 -d $ROUT3 -p 89 -j ACCEPT
-ip6tables -A OUTPUT -o Pythagore-eth1 -d $ROUT2 -p 89 -j ACCEPT
-ip6tables -A OUTPUT -o Pythagore-eth1 -d $ROUT3 -p 89 -j ACCEPT
-ip6tables -A OUTPUT -o Pythagore-eth2 -d $ROUT2 -p 89 -j ACCEPT
-ip6tables -A OUTPUT -o Pythagore-eth2 -d $ROUT3 -p 89 -j ACCEPT
-## Forward rules concerning ospf
-ip6tables -A FORWARD -i Pythagore-eth0 -s $ROUT2 -p 89 -j ACCEPT
-ip6tables -A FORWARD -i Pythagore-eth0 -s $ROUT3 -p 89 -j ACCEPT
-ip6tables -A FORWARD -i Pythagore-eth1 -s $ROUT2 -p 89 -j ACCEPT
-ip6tables -A FORWARD -i Pythagore-eth1 -s $ROUT3 -p 89 -j ACCEPT
-ip6tables -A FORWARD -i Pythagore-eth2 -s $ROUT2 -p 89 -j ACCEPT
-ip6tables -A FORWARD -i Pythagore-eth2 -s $ROUT3 -p 89 -j ACCEPT
-ip6tables -A FORWARD -o Pythagore-eth0 -s $ROUT2 -p 89 -j ACCEPT
-ip6tables -A FORWARD -o Pythagore-eth0 -s $ROUT3 -p 89 -j ACCEPT
-ip6tables -A FORWARD -o Pythagore-eth1 -s $ROUT2 -p 89 -j ACCEPT
-ip6tables -A FORWARD -o Pythagore-eth1 -s $ROUT3 -p 89 -j ACCEPT
-ip6tables -A FORWARD -o Pythagore-eth2 -s $ROUT2 -p 89 -j ACCEPT
-ip6tables -A FORWARD -o Pythagore-eth2 -s $ROUT3 -p 89 -j ACCEPT
+# TODO: Add dropping rules for interface linked to staff/guest
+#
+# ip6tables -A INPUT -i user_interface -p 89 -j DROP
+# ip6tables -A OUTPUT -i user_interface -p 89 -j DROP
+# ip6tables -A FORWARD -i user_interface -p 89 -j DROP
+# ip6tables -A FORWARD -o user_interface -p 89 -j DROP
+ip6tables -A INPUT -p 89 -j ACCEPT
+ip6tables -A OUTPUT -p 89 -j ACCEPT
+ip6tables -A FORWARD -p 89 -j ACCEPT
 
 # Accept ICMPv6 only source for FORW to avoid capture of staff->router
 ip6tables -A INPUT -p icmpv6 -s $ROUT2 -j ACCEPT
@@ -111,20 +93,26 @@ ip6tables -A FORWARD -s $ADMIN3 -j ACCEPT
 #
 # -------- STAFF configuration
 #
+# Accept tcp : send dns request to dns server, send to 80/443 and ssh
+ip6tables -A FORWARD --src $STAFF2 -p tcp -m multiport --dports 22,53,80,443 -j ACCEPT
+ip6tables -A FORWARD --src $STAFF3 -p tcp -m multiport --dports 22,53,80,443 -j ACCEPT
 
 #
 # -------- GUEST configuration
 #
+# Accept tcp : send dns , http/https
+ip6tables -A FORWARD --src $GUEST2 -p tcp -m multiport --dports 53,80,443 -j ACCEPT
+ip6tables -A FORWARD --src $GUEST3 -p tcp -m multiport --dports 53,80,443 -j ACCEPT
 
 #
 # -------- IOT configuration
 #
 
-# Accept ICMPv6 (to be filtered: R, s,g)
-# ip6tables -A INPUT -p ipv6-icmp -j ACCEPT
-# ip6tables -A OUTPUT -p ipv6-icmp -j ACCEPT
-# ip6tables -A FORWARD -p ipv6-icmp -j ACCEPT
-#
+# Accept SNMP  protocol (experimental)
+ip6tables -A INPUT -p udp --dport 161 -j ACCEPT
+ip6tables -A OUTPUT -p udp --dport 161 -j ACCEPT
+ip6tables -A FORWARD -p udp --dport 161 -j ACCEPT
+
 # Accept SSH connection (port:22) (to be filtered: A)
 ip6tables -A INPUT -p tcp --dport 22 -j ACCEPT
 ip6tables -A OUTPUT -p tcp --dport 22 -j ACCEPT

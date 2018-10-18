@@ -6,7 +6,6 @@
 #
 # -------- Initial configuration
 #
-
 # Erase all existing chain
 ip6tables -F INPUT
 ip6tables -F OUTPUT
@@ -30,24 +29,25 @@ ip6tables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
 #
 # -------- Router configuration
 #
-
 # Accept ICMPv6
 ip6tables -A INPUT -p icmpv6 -j ACCEPT
 ip6tables -A OUTPUT -p icmpv6 -j ACCEPT
 ip6tables -A FORWARD -p icmpv6 -j ACCEPT
 
-# Accept OSPF (port:89) (to be filtered: R)
-ip6tables -A INPUT -p 89 -s $ROUT2 -j ACCEPT
-ip6tables -A OUTPUT -p 89 -d $ROUT2 -j ACCEPT
-ip6tables -A FORWARD -p 89 -s $ROUT2 -j ACCEPT
-ip6tables -A INPUT -p 89 -s $ROUT3 -j ACCEPT
-ip6tables -A OUTPUT -p 89 -d $ROUT3 -j ACCEPT
-ip6tables -A FORWARD -p 89 -s $ROUT3 -j ACCEPT
+# Accept ospf (port:89) from inside the Network
+# TODO: Add dropping rules for interface linked to staff/guest
+#
+# ip6tables -A INPUT -i user_interface -p 89 -j ACCEPT
+# ip6tables -A OUTPUT -i user_interface -p 89 -j ACCEPT
+# ip6tables -A FORWARD -i user_interface -p 89 -j ACCEPT
+# ip6tables -A FORWARD -o user_interface -p 89 -j ACCEPT
+ip6tables -A INPUT -p 89 -j ACCEPT
+ip6tables -A OUTPUT -p 89 -j ACCEPT
+ip6tables -A FORWARD -p 89 -j ACCEPT
 
 #
 # -------- ADMIN configuration
 #
-
 # Accept everything for/from administrators
 ip6tables -A INPUT -s $ADMIN2 -j ACCEPT
 ip6tables -A INPUT -s $ADMIN3 -j ACCEPT
@@ -59,10 +59,16 @@ ip6tables -A FORWARD -s $ADMIN3 -j ACCEPT
 #
 # -------- STAFF configuration
 #
+# Accept tcp : send dns request to dns server, send to 80/443 and ssh
+ip6tables -A FORWARD --src $STAFF2 -p tcp -m multiport --dports 22,53,80,443 -j ACCEPT
+ip6tables -A FORWARD --src $STAFF3 -p tcp -m multiport --dports 22,53,80,443 -j ACCEPT
 
 #
 # -------- GUEST configuration
 #
+# Accept tcp : send dns , http/https
+ip6tables -A FORWARD --src $GUEST2 -p tcp -m multiport --dports 53,80,443 -j ACCEPT
+ip6tables -A FORWARD --src $GUEST3 -p tcp -m multiport --dports 53,80,443 -j ACCEPT
 
 #
 # -------- IOT configuration
