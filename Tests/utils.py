@@ -25,7 +25,7 @@ def lookup_host_ip(host):
 
     """
 
-    lines = os.Popen('sudo utils/exec_comand.sh' + host + "ip -f inet6 a | awk '/inet6 / { print $2 }").read()
+    lines = os.Popen('sudo Tests/exec_comand.sh' + host + "ip -f inet6 a | awk '/inet6 / { print $2 }").read()
     ips = re.findall(r"fd00:[2-3]00.7.*", lines)
 
     return ips
