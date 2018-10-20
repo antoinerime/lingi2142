@@ -44,7 +44,7 @@ function mk_topo {
 
     echo "@@ Adding LANs"
     # You can add your LANs here
-
+    mk_LAN Carnoy MONIT # Carnoy-lan1 : Monitoring server
     echo "@@ Bridging the network"
     # Connect to belneta and belnetb
     bridge_node Pythagore eth1 belneta
