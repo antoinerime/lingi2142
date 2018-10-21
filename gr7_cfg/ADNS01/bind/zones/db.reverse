@@ -1,0 +1,26 @@
+;
+; fd00:200:7::/48
+;
+; Zone file built with the IPv6 Reverse DNS zone builder
+; http://rdns6.com/
+;
+$TTL 1h	; Default TTL
+@	IN	SOA	group7.ingi.	admin.group7.ingi. (
+	2018102401	; serial
+	1h		; slave refresh interval
+	15m		; slave retry interval
+	1w		; slave copy expire time
+	1h		; NXDOMAIN cache time
+	)
+
+;
+; domain name servers
+;
+@	IN	NS	group7.ingi.
+
+
+; IPv6 PTR entries
+7.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.7.2.0.0.7.0.0.0.0.0.2.0.0.0.d.f.ip6.arpa.    IN    PTR    ns1.group7.ingi.
+7.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.7.2.0.0.7.0.0.0.0.0.3.0.0.0.d.f.ip6.arpa.    IN    PTR    ns1.group7.ingi.
+7.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.7.5.0.0.7.0.0.0.0.0.2.0.0.0.d.f.ip6.arpa.    IN    PTR    ns2.group7.ingi.
+7.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.7.5.0.0.7.0.0.0.0.0.3.0.0.0.d.f.ip6.arpa.    IN    PTR    ns2.group7.ingi.

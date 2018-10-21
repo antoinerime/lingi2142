@@ -1,0 +1,21 @@
+;
+; BIND data file for local loopback interface
+;
+$TTL	604800
+@	IN	SOA	ns1.group7.ingi. admin.group7.ingi. (
+		     2018102401		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
+; Name servers
+group7.ingi.	IN	NS	ns1.group7.ingi.
+group7.ingi.	IN	NS	ns2.group7.ingi.
+
+; Records
+ns1	IN	AAAA	fd00:200:7:27::7
+ns1	IN	AAAA	fd00:300:7:27::7
+
+ns2	IN	AAAA	fd00:200:7:57::7
+ns2	IN	AAAA	fd00:300:7:57::7

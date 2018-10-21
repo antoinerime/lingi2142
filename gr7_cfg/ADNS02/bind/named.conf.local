@@ -1,0 +1,21 @@
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+zone "group7.ingi." {
+	type slave;
+	file "db.group7.ingi";
+	masters { fd00:200:7:27::7; fd00:300:7:27::7; };
+};
+
+zone "7.0.0.0.0.0.2.0.0.0.d.f.ip6.arpa." {
+	type slave;
+	file "db.reverse";
+	masters { fd00:200:7:27::7; fd00:300:7:27::7; };
+};
+
+
