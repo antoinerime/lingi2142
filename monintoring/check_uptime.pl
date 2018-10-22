@@ -1,26 +1,14 @@
 #!/usr/bin/perl
-#===============================================================================
-# Auteur : djibril
-# Date   : 31/10/2013
-# But    : Check Uptime on Linux/Unix
-#===============================================================================
+
 use strict;
 use warnings;
 
 use Monitoring::Plugin;
 use English '-no_match_vars';
-use vars qw/ $VERSION /;
-
-# Version du plugin
-$VERSION = '1.0';
-
-my $LICENCE = 'This Plugin is free';
 
 my $plugin_nagios = Monitoring::Plugin->new(
     shortname => 'Check uptime',
     usage     => 'Usage : %s [ -c|--critical=<threshold> ] [ -w|--warning=<threshold> ]',
-    version   => $VERSION,
-    license   => $LICENCE,
 );
 
 if ( lc $OSNAME eq 'mswin32' ) {

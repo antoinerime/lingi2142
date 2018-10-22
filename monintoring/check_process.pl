@@ -1,26 +1,13 @@
 #!/usr/bin/perl
-#==============================================================
-# Auteur : Djibril
-# But    : Plugin nagios permettant de vérifier l'existence d'un
-#          processus via le nom et/ou la commande système
-# Date   : 31/10/2013
-#==============================================================
 
 use warnings;
 use strict;
 use Monitoring::Plugin;
 use Proc::ProcessTable;
-use vars qw/ $VERSION /;
 
-# Version du plugin
-$VERSION = '1.0';
-
-my $LICENCE = 'This Plugin is free';
 my $plugin_nagios = Monitoring::Plugin->new(
     shortname => 'Check process',
     usage     => 'Usage: %s [ -proc_name|-n=<Process name> ] [ -path|-p=<Path> ]',
-    version   => $VERSION,
-    license   => $LICENCE,
 );
 
 # Définition des options de ligne de commande

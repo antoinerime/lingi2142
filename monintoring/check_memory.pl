@@ -1,9 +1,5 @@
 #!/usr/bin/perl
-#===============================================================================
-# Auteur : djibril
-# Date   : 29/10/2013
-# But    : Check Memory and Swap on Linux/Unix
-#===============================================================================
+
 use strict;
 use warnings;
 
@@ -12,16 +8,11 @@ use English '-no_match_vars';
 use Sys::MemInfo qw/availkeys/;
 use vars qw/ $VERSION /;
 
-# Version du plugin
-$VERSION = '1.0';
-
 my $LICENCE = 'This Plugin is free';
 
 my $plugin_nagios = Monitoring::Plugin->new(
     shortname => 'Check memory',
     usage     => 'Usage : %s [ -c|--critical=<threshold> ] [ -w|--warning=<threshold> ] [ -M|--memory=<mem or swap> ]',
-    version   => $VERSION,
-    license   => $LICENCE,
 );
 
 if ( lc $OSNAME eq 'mswin32' ) {
@@ -37,7 +28,7 @@ $plugin_nagios->add_arg(
 
 # Définition de l'argument warning
 $plugin_nagios->add_arg(
-    spec     => 'warning|w=f',                                               # Nous acceptons des nombres réels
+    spec     => 'warning|w=f',
     help     => 'Exit with WARNING status if more than pourcentage',
     required => 1,
 );
