@@ -2,9 +2,12 @@
 
 Bird_Node=('Michotte' 'Carnoy' 'SH1C' 'Halles' 'Pythagore' 'Stevin' 'MONIT' 'ADNS01' 'ADNS02' 'RDNS01' 'RDNS02')
 
-file=('/etc/nagios/nrpe.cfg' '/etc/snmp/snmpd.conf' '/etc/snmp/snmpd.conf')
-value=('allowed_hosts=127.0.0.1' '#agentAddress udp:161,udp6:[::1]:161' ' rocommunity public  default    -V systemonly')
-new_value=('allowed_hosts=fd00:300:7:57::10' 'agentAddress udp6:[fd00:200::7:1]:161' '# rocommunity public  default    -V systemonly')
+file=('/etc/nagios/nrpe.cfg')
+value=('allowed_hosts=127.0.0.1')
+new_value=('allowed_hosts=fd00:300:7:57::10')
+IP6_Node=('fd00:200:7:34::4' 'fd00:200:7:34::4' 'fd00:200:7:34::3' 'fd00:200:7:13::1' 'fd00:200:7:12::2' 'fd00:200:7:56::6' 'fd00:200:7:57::10' 'fd00:200:7:27::7'
+'fd00:200:7:57::7' 'fd00:200:7:29::9' 'fd00:200:7:59::9')
+
 
 echo "deb http://ftp.de.debian.org/debian jessie main non-free" >> /etc/apt/sources.list
 apt-get update
@@ -40,6 +43,7 @@ for i in  ${file[*]}
                 echo "[INFO] backup of configuration file $i ..."
                 cp "$i" "$i.save"
         done
+
 echo "[INFO-gr7_cfg] create command[check_memory] to /etc/nagios/nrpe.cfg "
 echo "command[check_memory]=/usr/lib/nagios/plugins/check_memory.pl -w $ -c $ -M $" >> /etc/nagios/nrpe.cfg
 
@@ -74,6 +78,13 @@ for i in  ${file[*]}
         done
 ###############
 
+for i in  ${IP6_Node[*]}
+	do
+echo "agentAddress udp6:["$i"]:161" >> /etc/snmp/snmpd.conf
+
+
+done
+
 #copie snmp folder to the node
 echo "[INFO-gr7_cfg] create nagios configuration files for nodes"
 
@@ -95,8 +106,8 @@ echo "[INFO-gr7_cfg] create nagios configuration files for nodes"
 
 for i in  ${Bird_Node[*]}
         do
-                echo "[INFO-gr7_cfg] create configuration file $i ..."
-                cp /home/vagrant/lingi2142/gr7_cfg/monintoring/"$i".cfg /home/vagrant/lingi2142/gr7_cfg/MONIT/nagios3/conf.d/
+                echo "[INFO-gr7_cfg] create configuration file $i .cfg ..."
+                cp /home/vagrant/lingi2142/monintoring/"$i".cfg /home/vagrant/lingi2142/gr7_cfg/MONIT/nagios3/conf.d/
         done
 
         #Restarting service

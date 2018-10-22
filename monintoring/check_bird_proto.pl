@@ -10,6 +10,7 @@ my $np = Nagios::Plugin->new(
   plugin => "check_bird_proto", shortname => "BIRD_PROTO", version => "",
   usage => "Usage: %s -p <protocol> [ -r <table> -z -s <socket> ]",
 );
+
 $np->add_arg(
   spec => "protocol|p=s",
   help => "The name of the protocol to monitor.",
@@ -27,16 +28,18 @@ $np->add_arg(
 $np->add_arg(
   spec => "socket|s=s",
   help => "The location of the BIRD control socket.",
-  default => "/tmp/Michotte_bird6.ctl",
+# default => "/var/run/bird.ctl",
 );
 $np->getopts;
-
+my $node = $np->opts->socket ;
+print "la variable vaut $node \n" ;
 # Handle timeouts (also triggers on invalid command)
 $SIG{ALRM} = sub { $np->nagios_exit(CRITICAL, "Timeout (possibly invalid command)") };
 alarm $np->opts->timeout;
 
 eval q{
-my $birdctl = "birdc6 -s /tmp/Michotte_bird6.ctl";
+my $birdctl = "birdc6 -s /tmp/".$node."_bird6.ctl";
+#my $birdctl = "birdc6 -s /tmp/Michotte_bird6.ctl";
   # Get protocol information
   my @status;
   foreach ( exec($birdctl." show protocols " . $np->opts->protocol) ) {
