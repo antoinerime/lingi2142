@@ -40,8 +40,10 @@ ip6tables -A OUTPUT -p 89 -j ACCEPT
 ip6tables -A FORWARD -p 89 -j ACCEPT
 
 # Accept incomming and outgoing packet for DNS
-ip6tables -A INPUT -p tcp --dport 53 -j ACCEPT
-ip6tables -A OUTPUT -p tcp --dport 53 -j ACCEPT
+ip6tables -A INPUT -p tcp --dport 53 -s $SUB2 -j ACCEPT
+ip6tables -A OUTPUT -p tcp --dport 53 -d $SUB2 -j ACCEPT
+ip6tables -A INPUT -p tcp --dport 53 -s $SUB3 -j ACCEPT
+ip6tables -A OUTPUT -p tcp --dport 53 -d $SUB3 -j ACCEPT
 
 #
 # -------- ADMIN configuration

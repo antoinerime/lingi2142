@@ -15,7 +15,7 @@ apt-get -y -qq --force-yes update
 
 apt-get -y -qq --force-yes install git bash vim-nox tcpdump nano\
                                           bird6 quagga inotify-tools\
-                                          iperf ulogd
+                                          iperf 
 # dependencies for puppet
 # apt-get -y -qq --force-yes install ruby ruby-dev libboost-all-dev gettext curl libcurl4-openssl-dev libyaml-cpp-dev
 apt-get -y -qq --force-yes install puppet # TODO Get more recent version of puppet

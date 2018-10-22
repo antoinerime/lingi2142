@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# DNS
-DNS2=""
-DNS3=""
+# Subnetwork
+SUB2="fd00:200:7::/48"
+SUB3="fd00:300:7::/48"
 
 # Router subnet address
 ROUT2="fd00:200:7:0000::/56"
