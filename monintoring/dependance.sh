@@ -40,15 +40,21 @@ for i in  ${file[*]}
                 echo "[INFO] backup of configuration file $i ..."
                 cp "$i" "$i.save"
         done
-
+echo "[INFO-gr7_cfg] create command[check_memory] to /etc/nagios/nrpe.cfg "
 echo "command[check_memory]=/usr/lib/nagios/plugins/check_memory.pl -w $ -c $ -M $" >> /etc/nagios/nrpe.cfg
+
+echo "[INFO-gr7_cfg] create command[check_uptime] to /etc/nagios/nrpe.cfg "
 echo "command[check_uptime]=/usr/lib/nagios/plugins/check_uptime.pl -w $ARG1$ -c $ARG2$" >> /etc/nagios/nrpe.cfg
+
+echo "[INFO-gr7_cfg] create command[check_process] to /etc/nagios/nrpe.cfg "
 echo "command[check_process]=/usr/lib/nagios/plugins/check_process.pl -n $ARG1$" >> /etc/nagios/nrpe.cfg
+
+echo "[INFO-gr7_cfg] create command[check_apt] to /etc/nagios/nrpe.cfg"
 echo "command[check_apt]=/usr/lib/nagios/plugins/check_apt $ARG1$" >> /etc/nagios/nrpe.cfg
 
 
-echo "copie the perl plugin to /usr/lib/nagios/plugins/"
-cp ~/lingi2142/monintoring/*.pl /usr/lib/nagios/plugins/
+echo "[INFO-gr7_cfg] copie the perl plugin to /usr/lib/nagios/plugins/"
+cp /home/vagrant/lingi2142/monintoring/*.pl /usr/lib/nagios/plugins/
 
 ##############
 #fonction to configured automaticaly file
@@ -57,7 +63,7 @@ function change_configuration
 
         for file in  "$1"
                 do
-                        echo "file processing  $1 ..."
+                        echo "[INFO-gr7_cfg] file processing  $1 ..."
                         sed -i -e "s/$2/$3/g" "$1"
                 done
 }
@@ -72,40 +78,40 @@ for i in  ${file[*]}
 ###############
 
 #copie snmp folder to the node
-echo "[INFO] create nagios configuration files for nodes"
+echo "[INFO-gr7_cfg] create nagios configuration files for nodes"
 
 for i in  ${Bird_Node[*]}
         do
-                echo "[INFO] copie snmp files to the nodes $i ..."
-                cp -Rf /etc/snmp/ ~/lingi2142/gr7_cfg/"$i"/
-		cp -Rf /etc/snmp-mibs-downloader/ ~/lingi2142/gr7_cfg/"$i"/
-		cp -Rf /etc/nagios3/ ~/lingi2142/gr7_cfg/"$i"/
-		cp -Rf /etc/nagios/ ~/lingi2142/gr7_cfg/"$i"/
-		cp -Rf /etc/nagios-plugins/ ~/lingi2142/gr7_cfg/"$i"/
-		cp -Rf /etc/init.d/ ~/lingi2142/gr7_cfg/"$i"/
-		cp /etc/group ~/lingi2142/gr7_cfg/"$i"/
-		cp /etc/passwd ~/lingi2142/gr7_cfg/"$i"/
+                echo "[INFO-gr7_cfg] copie snmpd and nagios files to the nodes $i ..."
+                cp -Rf /etc/snmp/ /home/vagrant/lingi2142/gr7_cfg/"$i"/
+		cp -Rf /etc/snmp-mibs-downloader/ /home/vagrant/lingi2142/gr7_cfg/"$i"/
+		cp -Rf /etc/nagios3/ /home/vagrant/lingi2142/gr7_cfg/"$i"/
+		cp -Rf /etc/nagios/ /home/vagrant/lingi2142/gr7_cfg/"$i"/
+		cp -Rf /etc/nagios-plugins/ /home/vagrant/lingi2142/gr7_cfg/"$i"/
+		cp -Rf /etc/init.d/ /home/vagrant/lingi2142/gr7_cfg/"$i"/
+		cp /etc/group /home/vagrant/lingi2142/gr7_cfg/"$i"/
+		cp /etc/passwd /home/vagrant/lingi2142/gr7_cfg/"$i"/
         done
 
 #create nagios configuration files for nodes
-echo "[INFO] create nagios configuration files for nodes"
+echo "[INFO-gr7_cfg] create nagios configuration files for nodes"
 
 for i in  ${Bird_Node[*]}
         do
-                echo "[INFO] create configuration file $i ..."
-                cp ~/lingi2142/gr7_cfg/monintoring/"$i".cfg ~/lingi2142/gr7_cfg/MONIT/nagios3/conf.d/
+                echo "[INFO-gr7_cfg] create configuration file $i ..."
+                cp /home/vagrant/lingi2142/gr7_cfg/monintoring/"$i".cfg /home/vagrant/lingi2142/gr7_cfg/MONIT/nagios3/conf.d/
         done
 
 
 #Restarting service
-echo "[INFO] Restarting the nagios service"
+echo "[INFO-gr7_cfg] Restarting the nagios service"
 /etc/init.d/nagios3 restart
 
-echo "[INFO] Restarting the nrpe service"
+echo "[INFO-gr7_cfg] Restarting the nrpe service"
 /etc/init.d/nagios-nrpe-server restart
 
-echo "[INFO] Restarting the snmp service"
+echo "[INFO-gr7_cfg] Restarting the snmp service"
 /etc/init.d/snmpd restart
 
 
-echo "[FIN] Terminede"
+echo "[FIN INSTALATION AND CONFIGURATION MONINTORING SERVICE :GROUPE7] Termined"
