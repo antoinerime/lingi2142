@@ -27,7 +27,7 @@ ip6tables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 ip6tables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 #
-# -------- Router configuration
+# -------- Router configuration + DNS Server
 #
 # Accept ICMPv6
 ip6tables -A INPUT -p icmpv6 -j ACCEPT
@@ -38,6 +38,10 @@ ip6tables -A FORWARD -p icmpv6 -j ACCEPT
 ip6tables -A INPUT -p 89 -j ACCEPT
 ip6tables -A OUTPUT -p 89 -j ACCEPT
 ip6tables -A FORWARD -p 89 -j ACCEPT
+
+# Accept incomming and outgoing packet for DNS
+ip6tables -A INPUT -p tcp --dport 53 -j ACCEPT
+ip6tables -A OUTPUT -p tcp --dport 53 -j ACCEPT
 
 #
 # -------- ADMIN configuration

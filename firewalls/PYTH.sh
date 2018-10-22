@@ -55,17 +55,11 @@ ip6tables -A FORWARD -o belneta -p udp -m multiport --dports 546,547 -j DROP
 ip6tables -A INPUT -i belnetb -p tcp --dport 22 -j DROP
 
 #
-# -------- ROUTER configuration
+# -------- ROUTER configuration + DNS Server
 #
 # Accept all the other ospf, they are comming from internet
 
 # Accept ospf (port:89) from inside the Network
-# TODO: Add dropping rules for interface linked to staff/guest
-#
-# ip6tables -A INPUT -i user_interface -p 89 -j DROP
-# ip6tables -A OUTPUT -i user_interface -p 89 -j DROP
-# ip6tables -A FORWARD -i user_interface -p 89 -j DROP
-# ip6tables -A FORWARD -o user_interface -p 89 -j DROP
 ip6tables -A INPUT -p 89 -j ACCEPT
 ip6tables -A OUTPUT -p 89 -j ACCEPT
 ip6tables -A FORWARD -p 89 -j ACCEPT
@@ -77,6 +71,10 @@ ip6tables -A FORWARD -p icmpv6 -s $ROUT2 -j ACCEPT
 ip6tables -A INPUT -p icmpv6 -s $ROUT3 -j ACCEPT
 ip6tables -A OUTPUT -p icmpv6 -d $ROUT3 -j ACCEPT
 ip6tables -A FORWARD -p icmpv6 -s $ROUT3 -j ACCEPT
+
+# Accept incomming and outgoing packet for DNS
+ip6tables -A INPUT -p tcp --dport 53 -j ACCEPT
+ip6tables -A OUTPUT -p tcp --dport 53 -j ACCEPT
 
 #
 # -------- ADMIN configuration
@@ -119,7 +117,7 @@ ip6tables -A OUTPUT -p tcp --dport 22 -j ACCEPT
 ip6tables -A FORWARD -p tcp --dport 22 -j ACCEPT
 
 #LOG
-ip6tables -A INPUT -j LOG --log-prefix "++ [INPUT] Packet dropped ++ "
-ip6tables -A OUTPUT -j LOG --log-prefix "++ [OUTPUT] Packet dropped ++ "
-ip6tables -A FORWARD -j LOG --log-prefix "++ [FORWARD] Packet dropped ++ "
+ip6tables -A INPUT -j NFLOG --log-prefix "++ [INPUT] Packet dropped ++ "
+ip6tables -A OUTPUT -j NFLOG --log-prefix "++ [OUTPUT] Packet dropped ++ "
+ip6tables -A FORWARD -j NFLOG --log-prefix "++ [FORWARD] Packet dropped ++ "
 # ip6tables-save

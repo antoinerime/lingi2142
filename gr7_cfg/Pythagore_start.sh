@@ -16,4 +16,5 @@ puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /et
 
 echo "[PYTH] setting firewall"
 firewalls/./PYTH.sh
+ulogd -d
 echo "[PYTH] firewall set"

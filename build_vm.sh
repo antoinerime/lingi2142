@@ -9,7 +9,7 @@ vagrant plugin install vagrant-vbguest
 if [ "$MINVER" != "$CMP" ]; then
     BOXNAME=$(awk -F "=" '/config.vm.box/ { gsub(/ *"*/, "", $NF); print $NF }' Vagrantfile)
     echo "Detected Vagrant version < 1.5 ($VAGRANTVER), manually importing the base box $BOXNAME"
-    vagrant box add $BOXNAME 
+    vagrant box add $BOXNAME --force
 else
     echo "Vagrant version is >= 1.5 ($VAGRANTVER), it will honour the vm.config.box parameter"
 fi

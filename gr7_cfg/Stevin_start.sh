@@ -10,5 +10,6 @@ ip addr add fd00:300:7:26::6/64 dev Stevin-eth1
 puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /etc/puppet/site.pp --modulepath=/puppetmodules
 
 echo "[STEV] setting firewall"
-firewalls/./INTERN.sh
+firewalls/./STEV.sh
+ulogd -d
 echo "[STEV] firewall set"

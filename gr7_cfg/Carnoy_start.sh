@@ -14,5 +14,6 @@ ip addr add fd00:300:7:56::5/64 dev Carnoy-eth2
 puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /etc/puppet/site.pp --modulepath=/puppetmodules
 
 echo "[CARN] setting firewall"
-firewalls/./INTERN.sh
+firewalls/./CARN.sh
+ulogd -d
 echo "[CARN] firewall set"
