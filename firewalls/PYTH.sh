@@ -117,7 +117,7 @@ ip6tables -A OUTPUT -p tcp --dport 22 -j ACCEPT
 ip6tables -A FORWARD -p tcp --dport 22 -j ACCEPT
 
 #LOG
-ip6tables -A INPUT -j NFLOG --log-prefix "++ [INPUT] Packet dropped ++ "
-ip6tables -A OUTPUT -j NFLOG --log-prefix "++ [OUTPUT] Packet dropped ++ "
-ip6tables -A FORWARD -j NFLOG --log-prefix "++ [FORWARD] Packet dropped ++ "
+ip6tables -A INPUT -j NFLOG --nflog-prefix "++ [INPUT] Packet dropped ++ "
+ip6tables -A OUTPUT -j NFLOG --nflog-prefix "++ [OUTPUT] Packet dropped ++ "
+ip6tables -A FORWARD -j NFLOG --nflog-prefix "++ [FORWARD] Packet dropped ++ "
 # ip6tables-save
