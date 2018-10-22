@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import utils
 
 # Node to test, add new nodes in that list to test them
@@ -15,11 +16,12 @@ def get_all_ip():
 def ping_nodes():
     for node in nodes:
         for ip in node_ips[node]:
-            out, err, p = utils.execute_in_host(current_node, "ping6 -c 1 -n -W2" + ip)
+            out, err, p = utils.execute_in_host(current_node, "ping6 -c 1 -n -W2 " + ip)
             if p:  # TODO Printing method in utils
-                print("Router 's' can't ping 's'".format(current_node, ip))
+		print(out, err, p)
+                print("Router {} can't ping {}".format(current_node, ip))
             else:
-                print("Router 's' successfully ping 's'".format(current_node, ip))
+                print("Router {} successfully ping {}".format(current_node, ip))
 
 
 def ping_provider():
@@ -28,20 +30,21 @@ def ping_provider():
     for ip in node_ips[current_node]:
         out, err, p = utils.execute_in_host(current_node, "ping6 -I" + ip + "-c 1 -n -W2" + ip_200)
         if p:
-            print("Router 's' can't ping 's'".format(current_node, ip_200))
+            print("Router {} can't ping {}".format(current_node, ip_200))
         else:
-            print("Router 's' successfully ping 's'".format(current_node, ip_200))
+            print("Router {} successfully ping {}".format(current_node, ip_200))
         out, err, p = utils.execute_in_host(current_node, "ping6 -I" + ip + "-c 1 -n -W2" + ip_300)
         if p:
-            print("Router 's' can't ping 's'".format(current_node, ip_300))
+            print("Router {} can't ping {}".format(current_node, ip_300))
         else:
-            print("Router 's' successfully ping 's'".format(current_node, ip_300))
+            print("Router {} successfully ping {}".format(current_node, ip_300))
 
 
 if __name__ == '__main__':
-
     node_ips = get_all_ip()
-
+    for node in nodes:
+	for ip in node_ips[node]:
+	    print(ip)
     for current_node in nodes:
         ping_nodes()
         ping_provider()

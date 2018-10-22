@@ -12,4 +12,5 @@ if [[ "$#" -lt "2" ]] ; then
     echo "usage: ./exec_command NODE COMMAND"
     exit 1
 fi
+echo Exec command ${@:2}
 ip netns exec "$1" "${@:2}"

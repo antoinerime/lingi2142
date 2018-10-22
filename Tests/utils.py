@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 import re
 import subprocess
@@ -10,7 +12,7 @@ def execute_in_host(host, command):
         Execute command inside host
     """
 
-    p = subprocess.Popen("sudo Tests/exec_command.sh 's' 's'".format(host, command), stdout=subprocess.PIPE,
+    p = subprocess.Popen("sudo ~/lingi2142/Tests/exec_command.sh {} {}".format(host, command), stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE, shell=True)
 
     output, err = p.communicate()
@@ -27,7 +29,7 @@ def lookup_host_ip(host):
 
     """
 
-    lines = os.popen('sudo Tests/exec_comand.sh' + host + "ip -f inet6 a | awk '/inet6 / { print $2 }").read()
-    ips = re.findall(r'fd00:[2-3]00.7.*', lines)
+    lines = os.popen('sudo ~/lingi2142/Tests/exec_command.sh ' + host + ' ip -f inet6 a | awk "/inet6 /{print $2}"').read()
+    ips = re.findall(r'fd00:[2-3]00:7:.*:\d', lines)
 
     return ips
