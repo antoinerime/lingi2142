@@ -1,0 +1,41 @@
+# Mémoire RAM
+
+define service{
+    use                     generic-service
+    host_name               SERVEURLINUX
+    service_description     Mémoire RAM
+    check_command           check_nrpe!check_memory!90!95!mem
+    }
+
+# SWAP
+
+define service{
+    use                     generic-service
+    host_name               SERVEURLINUX
+    service_description     Mémoire Swap
+    check_command           check_nrpe!check_memory!10!20!swap
+    }
+
+# Vérification Uptime
+define service{
+    use                     generic-service
+    host_name               SERVEURLINUX
+    service_description     Vérification Uptime
+    check_command           check_nrpe!check_uptime!30!60
+}
+
+#Verification DNS
+define service{
+    use                     generic-service
+    host_name               supervision
+    service_description     DNS
+    check_command           check_dns!SERVEURDNS!SERVEURATESTER!IP-ATTENDUE
+    }
+
+#Verification uptade
+define service{
+    use                     generic-service
+    host_name               SERVEURLINUX
+    service_description     Mise à jour Debian
+    check_command           check_nrpe!check_apt!-u
+}

@@ -1,4 +1,4 @@
-root:x:0:
+root:x:0:nagios
 daemon:x:1:
 bin:x:2:
 sys:x:3:
@@ -54,3 +54,9 @@ quaggavty:x:113:
 quagga:x:114:
 bird:x:115:
 puppet:x:116:
+munin:x:117:
+cl-builder:x:118:
+nagios:x:119:
+ssl-cert:x:120:
+nagcmd:x:1001:nagios
+snmp:x:121:

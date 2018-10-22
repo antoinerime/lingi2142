@@ -36,7 +36,7 @@ $SIG{ALRM} = sub { $np->nagios_exit(CRITICAL, "Timeout (possibly invalid command
 alarm $np->opts->timeout;
 
 eval q{
-my $birdctl = "sudo birdc6 -s /tmp/Michotte_bird6.ctl";
+my $birdctl = "birdc6 -s /tmp/Michotte_bird6.ctl";
   # Get protocol information
   my @status;
   foreach ( exec($birdctl." show protocols " . $np->opts->protocol) ) {
