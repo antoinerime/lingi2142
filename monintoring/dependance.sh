@@ -9,22 +9,22 @@ new_value=('allowed_hosts=fd00:300:7:57::10' 'agentAddress udp6:[fd00:200::7:1]:
 echo "deb http://ftp.de.debian.org/debian jessie main non-free" >> /etc/apt/sources.list
 apt-get update
 
-echo "[INFO] ."
+echo "[INFO-gr7_cfg] ."
 apt-get install -y libtimedate-perl libdatetime-perl libdatetime-format-duration-perl libnet-ip-perl libswitch-perl libtemplate-perl
 
-echo "[INFO] installation nagios and all its plugins "
+echo "[INFO-gr7_cfg] installation nagios and all its plugins "
 apt-get install -y nagios3 nagios-plugins nagios-nrpe-plugin nagios-plugins-contrib nagios-plugins-rabbitmq nagios-plugins-standard
 
-echo "[INFO] installation of the Nagios Remote Plugin Executor (NRPE) plug-in to monitor service and remote Linux / Unix network device"
+echo "[INFO-gr7_cfg] installation of the Nagios Remote Plugin Executor (NRPE) plug-in to monitor service and remote Linux / Unix network device"
 apt-get install -y nagios-nrpe-server
 
-echo "[INFO] installation snmp pacquet "
+echo "[INFO-gr7_cfg] installation snmp pacquet "
 apt-get install -y snmp snmpd snmp-mibs-downloader
 
-echo "[INFO] installation make pacquet "
+echo "[INFO-gr7_cfg] installation make pacquet "
 apt-get install -y make
 
-echo "[INFO] installation Plugin Monitoring pacquet for perl "
+echo "[INFO-gr7_cfg] installation Plugin Monitoring pacquet for perl "
 cpan -i Monitoring::Plugin Net::SNMP
 cpan -i Proc::ProcessTable
 cpan -i Sys::MemInfo
@@ -34,7 +34,7 @@ apt-get install -y gcc
 
 
 #backup of configuration files
-echo "[INFO] backup of configuration files"
+echo "[INFO-gr7_cfg] backup of configuration files"
 for i in  ${file[*]}
         do
                 echo "[INFO] backup of configuration file $i ..."
