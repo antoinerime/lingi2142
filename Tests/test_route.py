@@ -28,13 +28,13 @@ def ping_provider():
     ip_200 = "fd00:200::b"
     ip_300 = "fd00:300::b"
     for ip in node_ips[current_node]:
-        out, err, err_code = utils.execute_in_host(current_node, "ping6 -I" + ip + "-c 1 -n -W2" + ip_200)
+        out, err, err_code = utils.execute_in_host(current_node, "ping6 -I {} -c 1 -n -W2 {} ".format(ip, ip_200))
         if err_code:
             ping_err[current_node]["AS 200"].append(ip)
              # print("Router {} can't ping {}".format(current_node, ip_200))
         # else:
         # print("Router {} successfully ping {}".format(current_node, ip_200))
-        out, err, err_code = utils.execute_in_host(current_node, "ping6 -I" + ip + "-c 1 -n -W2" + ip_300)
+        out, err, err_code = utils.execute_in_host(current_node, "ping6 -I {} -c 1 -n -W2 {} ".format(ip, ip_300))
         if err_code:
             ping_err[current_node]["AS 300"].append(ip)
             # print("Router {} can't ping {}".format(current_node, ip_300))
