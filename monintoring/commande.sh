@@ -1,30 +1,11 @@
 #!/bin/bash
 
-file=('fichier.txt' 'fichier2.txt' 'fichier3.txt')
+node_nagios=('Michotte.cfg' 'Carnoy.cfg' 'SH1C.cfg' 'Halles.cfg' 'Pythagore.cfg' 'Stevin.cfg' 'MONIT.cfg' 'ADNS01.cfg' 'ADNS02.cfg' 'RDNS01.cfg' 'RDNS02.cfg')
 value=('je suis tres fotrt' 'value2' 'value3')
 new_value=('ca donne tres bien' 'new_value2' 'new_value3')
 
-for i in  ${file[*]}
-do
-echo "[INFO] backup of configuration file $i ..."
-sudo cp "$i" "$i.save"
-done
-
-
-function ma_fonction
-{
-echo $1
-for file in  "$1"
-do
- echo "Traitement de $1 ..."
- sudo  sed -i -e "s/$2/$3/g" "$1"
-done
-}
-
-j=0
-for i in  ${file[*]}
-do
-echo "$j"
-#ma_fonction  ${file[$j]} ${value[$j]} ${new_value[$j]}
-((j++))
-done
+for i in  ${node_nagios[*]}
+        do
+                echo "[INFO] create configuration file $i ..."
+                sudo cp ~/lingi2142/gr7_cfg/MONIT/nagios3/conf.d/"$i" ~/lingi2142//monintoring/
+        done
