@@ -18,6 +18,7 @@ def ping_nodes():
         for ip in node_ips[node]:
             out, err, err_code = utils.execute_in_host(current_node, "ping6 -c 1 -n -W2 " + ip)
             if err_code:  # TODO Printing method in utils
+                ping_succ[current_node] = False
                 ping_err[current_node][node].append(ip)
                 # print("Router {} can't ping {}".format(current_node, ip))
             # else:
@@ -25,45 +26,44 @@ def ping_nodes():
 
 
 def ping_provider():
-    ip_200 = "fd00:200::b"
-    ip_300 = "fd00:300::b"
+    # ip_200 = "fd00:200::b"
+    # ip_300 = "fd00:300::b"
+    ip_google = "2a00:1450:400e:804::200e"
     for ip in node_ips[current_node]:
-        out, err, err_code = utils.execute_in_host(current_node, "ping6 -I {} -c 1 -n -W2 {} ".format(ip, ip_200))
+        out, err, err_code = utils.execute_in_host(current_node, "ping6 -I {} -c 1 -n -W2 {} ".format(ip, ip_google))
         if err_code:
-            ping_err[current_node]["AS 200"].append(ip)
+            ping_err[current_node]["Google"].append(ip)
+            ping_succ[current_node] = False
              # print("Router {} can't ping {}".format(current_node, ip_200))
         # else:
         # print("Router {} successfully ping {}".format(current_node, ip_200))
-        out, err, err_code = utils.execute_in_host(current_node, "ping6 -I {} -c 1 -n -W2 {} ".format(ip, ip_300))
-        if err_code:
-            ping_err[current_node]["AS 300"].append(ip)
-            # print("Router {} can't ping {}".format(current_node, ip_300))
-        # else:
-        #    print("Router {} successfully ping {}".format(current_node, ip_300))
 
 
 def print_ping_err():
     for node in ping_err:
         print("-" * 7 + " " + node + " " + "-" * 7)
-        if not ping_err[node]:
-            print("Every ping succeed")
-        else:
+	if ping_succ[node]:
+	    print("All ping succeed !")
+	else:            
             for acc_node in ping_err[node]:
-                for ip in ping_err[node][acc_node]:
-                    print("Could not access {} on address {}".format(acc_node, ip))
+	        for ip in ping_err[node][acc_node]:
+		    print("Could not access {} on address {}".format(acc_node, ip))
 
 def init_dict():
-    AS = ["AS 200", "AS 300"]
+    # AS = ["AS 200", "AS 300"]
     for node1 in nodes:
 	ping_err[node1] = dict()
+	ping_succ[node1] = True
 	for node2 in nodes:
 	    ping_err[node1][node2] = list()
-	for x in AS:
-	    ping_err[node1][x] = list()
+	ping_err[node1]["Google"] = list()
+	# for x in AS:
+	    # ping_err[node1][x] = list()
 
 
 if __name__ == '__main__':
     ping_err = dict()
+    ping_succ = dict()
     node_ips = get_all_ip()
     init_dict()
     for current_node in nodes:
