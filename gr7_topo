@@ -44,8 +44,8 @@ function mk_topo {
 
     echo "@@ Adding LANs"
     # You can add your LANs here
-    mk_LAN Pythagore RDNS01
-    mk_LAN Carnoy RDNS02
+    mk_LAN Pythagore ADNS01 RDNS01
+    mk_LAN Carnoy ADNS02 RDNS02
 
     echo "@@ Bridging the network"
     # Connect to belneta and belnetb
