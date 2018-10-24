@@ -97,7 +97,7 @@ ip6tables -A INPUT -p udp --dport 161 -j ACCEPT
 ip6tables -A OUTPUT -p udp --dport 161 -j ACCEPT
 ip6tables -A FORWARD -p udp --dport 161 -j ACCEPT
 
-# Accept SSH connection (port:22) default 
+# Accept SSH connection (port:22) default
 ip6tables -A INPUT -p tcp --dport 22 -j ACCEPT
 ip6tables -A OUTPUT -p tcp --dport 22 -j ACCEPT
 ip6tables -A FORWARD -p tcp --dport 22 -j ACCEPT
