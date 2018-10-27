@@ -25,7 +25,7 @@ puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /et
 
 #Wait for ospf to converge
 ip -6 route add default via fd00:200::b table 200
-ip -6 route add default via tun-Pyth table 300
+ip -6 route add default dev tun-Pyth table 300
 # echo "[HALL] setting firewall"
 # firewalls/./HALL.sh
 # echo "[HALL] firewall set"

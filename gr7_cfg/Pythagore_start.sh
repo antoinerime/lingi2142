@@ -29,8 +29,8 @@ ip addr add fd00:300:7:29::2/64 dev Pythagore-lan0
 puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /etc/puppet/site.pp --modulepath=/puppetmodules
 
 #Wait for ospf to converge
-ip route add default via tun-Hal table 200
-ip route add default via fd00:300::b table 300
+ip -6 route add default dev tun-Hal table 200
+ip -6 route add default via fd00:300::b table 300
 # echo "[PYTH] setting firewall"
 # firewalls/./PYTH.sh
 # echo "[PYTH] firewall set"
