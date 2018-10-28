@@ -61,13 +61,33 @@ ip6tables -A FORWARD -s $ADMIN3 -j ACCEPT
 #
 # -------- STAFF configuration
 #
-# Accept tcp : send dns request to dns server, send to 80/443 and ssh
-ip6tables -A FORWARD --src $STAFF2 -p tcp -m multiport --dports 22,53,80,443 -j ACCEPT
-ip6tables -A FORWARD --src $STAFF3 -p tcp -m multiport --dports 22,53,80,443 -j ACCEPT
+# Drop forwarding ssh/dns/http/https packet from staff to staff
+ip6tables -A FORWARD -s $STAFF2  -d $STAFF2 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+ip6tables -A FORWARD -s $STAFF2  -d $STAFF3 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+ip6tables -A FORWARD -s $STAFF3  -d $STAFF2 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+ip6tables -A FORWARD -s $STAFF3  -d $STAFF3 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+# Drop forwarding ssh/dns/http/https packet from staff to guest
+ip6tables -A FORWARD -s $STAFF2  -d $GUEST2 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+ip6tables -A FORWARD -s $STAFF2  -d $GUEST3 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+ip6tables -A FORWARD -s $STAFF3  -d $GUEST2 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+ip6tables -A FORWARD -s $STAFF3  -d $GUEST3 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+# Accept forwarding ssh/dns/http/https packet from staff
+ip6tables -A FORWARD -s $STAFF2 -p tcp -m multiport --dports 22,53,80,443 -j ACCEPT
+ip6tables -A FORWARD -s $STAFF3 -p tcp -m multiport --dports 22,53,80,443 -j ACCEPT
 
 #
 # -------- GUEST configuration
 #
+# Drop forwarding ssh/dns/http/https packet from guest to staff
+ip6tables -A FORWARD -s $GUEST2  -d $STAFF2 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+ip6tables -A FORWARD -s $GUEST2  -d $STAFF3 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+ip6tables -A FORWARD -s $GUEST3  -d $STAFF2 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+ip6tables -A FORWARD -s $GUEST3  -d $STAFF3 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+# Drop forwarding ssh/dns/http/https packet from guest to guest
+ip6tables -A FORWARD -s $GUEST2  -d $GUEST2 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+ip6tables -A FORWARD -s $GUEST2  -d $GUEST3 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+ip6tables -A FORWARD -s $GUEST3  -d $GUEST2 -p tcp -m multiport --dports 22,53,80,443 -j DROP
+ip6tables -A FORWARD -s $GUEST3  -d $GUEST3 -p tcp -m multiport --dports 22,53,80,443 -j DROP
 # Accept tcp : send dns , http/https
 ip6tables -A FORWARD --src $GUEST2 -p tcp -m multiport --dports 53,80,443 -j ACCEPT
 ip6tables -A FORWARD --src $GUEST3 -p tcp -m multiport --dports 53,80,443 -j ACCEPT
@@ -85,6 +105,6 @@ ip6tables -A OUTPUT -p udp --dport 161 -j ACCEPT
 ip6tables -A FORWARD -p udp --dport 161 -j ACCEPT
 
 # Log
-ip6tables -A INPUT -j NFLOG --nflog-prefix "++ [INPUT] Packet dropped ++ "
-ip6tables -A OUTPUT -j NFLOG --nflog-prefix "++ [OUTPUT] Packet dropped ++ "
-ip6tables -A FORWARD -j NFLOG --nflog-prefix "++ [FORWARD] Packet dropped ++ "
+ip6tables -A INPUT -j ULOG --ulog-prefix "++ [INPUT] Packet dropped ++ "
+ip6tables -A OUTPUT -j ULOG --ulog-prefix "++ [OUTPUT] Packet dropped ++ "
+ip6tables -A FORWARD -j ULOG --ulog-prefix "++ [FORWARD] Packet dropped ++ "
