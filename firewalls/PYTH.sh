@@ -63,7 +63,7 @@ ip6tables -A INPUT -i belnetb -p tcp --dport 22 -j DROP
 #
 # -------- ROUTER configuration + DNS Server
 #
-# Accept DHCP 
+# Accept DHCP
 ip6tables -A INPUT -p udp -m multiport --dport 547,547 -j ACCEPT
 ip6tables -A FORWARD -p udp -m multiport --dports 546,547 -j ACCEPT
 ip6tables -A OUTPUT -p udp -m multiport --dports 546,547 -j ACCEPT
@@ -115,6 +115,9 @@ ip6tables -A FORWARD --src $GUEST3 -p tcp -m multiport --dports 53,80,443 -j ACC
 #
 # -------- IOT configuration
 #
+# Accept staff to send print job to a remote printer
+ip6tables -A FORWARD --src $STAFF2 -p tcp --dport 515 -j ACCEPT
+ip6tables -A FORWARD --src $STAFF3 -p tcp --dport 515 -j ACCEPT
 
 # Accept SNMP  protocol (experimental)
 ip6tables -A INPUT -p udp --dport 161 -j ACCEPT

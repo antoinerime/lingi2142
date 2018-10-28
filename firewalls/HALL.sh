@@ -101,18 +101,16 @@ ip6tables -A FORWARD --src $GUEST3 -p tcp -m multiport --dports 53,80,443 -j ACC
 #
 # -------- IOT configuration
 #
-# Accept SNMP  protocol (experimental)
+# Accept staff to send print job to a remote printer
+ip6tables -A FORWARD --src $STAFF2 -p tcp --dport 515 -j ACCEPT
+ip6tables -A FORWARD --src $STAFF3 -p tcp --dport 515 -j ACCEPT
+
+# Accept SNMP  protocol
 ip6tables -A INPUT -p udp --dport 161 -j ACCEPT
 ip6tables -A OUTPUT -p udp --dport 161 -j ACCEPT
 ip6tables -A FORWARD -p udp --dport 161 -j ACCEPT
-
-# Accept SSH connection (port:22) default
-ip6tables -A INPUT -p tcp --dport 22 -j ACCEPT
-ip6tables -A OUTPUT -p tcp --dport 22 -j ACCEPT
-ip6tables -A FORWARD -p tcp --dport 22 -j ACCEPT
 
 #LOG
 ip6tables -A INPUT -j NFLOG --nflog-prefix "++ [INPUT] Packet dropped ++ "
 ip6tables -A OUTPUT -j NFLOG --nflog-prefix "++ [OUTPUT] Packet dropped ++ "
 ip6tables -A FORWARD -j NFLOG --nflog-prefix "++ [FORWARD] Packet dropped ++ "
-# ip6tables-save
