@@ -39,6 +39,10 @@ ip6tables -A INPUT -p 89 -j ACCEPT
 ip6tables -A OUTPUT -p 89 -j ACCEPT
 ip6tables -A FORWARD -p 89 -j ACCEPT
 
+# Accept Forwarding DNS queries/answers
+ip6tables -A FORWARD -p tcp --dport 53 -d $SUB2 -j ACCEPT
+ip6tables -A FORWARD -p tcp --dport 53 -d $SUB3 -j ACCEPT
+
 #
 # -------- ADMIN configuration
 #

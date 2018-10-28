@@ -67,6 +67,8 @@ ip6tables -A FORWARD --src $GUEST3 -p tcp -m multiport --dports 53,80,443 -j ACC
 #
 # -------- IOT configuration
 #
+#####
+
 
 # Accept SSH connection (port:22) (to be filtered: A)
 ip6tables -A INPUT -p tcp --dport 22 -j ACCEPT

@@ -29,6 +29,12 @@ ip6tables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
 #
 # -------- Border configuration
 #
+# Block spoofed address from internet interface
+ip6tables -A INPUT -i belneta -s $SUB2 -j DROP
+ip6tables -A FORWARD -i belneta -s $SUB2 -j DROP
+ip6tables -A INPUT -i belneta -s $SUB3 -j DROP
+ip6tables -A FORWARD -i belneta -s $SUB3 -j DROP
+
 # Accept bgp (port:179 over tcp) in/out traffic from interface belneta
 ip6tables -A INPUT -i belneta -p tcp --dport 179 -j ACCEPT
 ip6tables -A OUTPUT -o belneta -p tcp --dport 179 -j ACCEPT
@@ -57,26 +63,28 @@ ip6tables -A INPUT -i belnetb -p tcp --dport 22 -j DROP
 #
 # -------- ROUTER configuration + DNS Server
 #
-# Accept all the other ospf, they are comming from internet
+# Accept DHCP 
+ip6tables -A INPUT -p udp -m multiport --dport 547,547 -j ACCEPT
+ip6tables -A FORWARD -p udp -m multiport --dports 546,547 -j ACCEPT
+ip6tables -A OUTPUT -p udp -m multiport --dports 546,547 -j ACCEPT
 
 # Accept ospf (port:89) from inside the Network
 ip6tables -A INPUT -p 89 -j ACCEPT
 ip6tables -A OUTPUT -p 89 -j ACCEPT
 ip6tables -A FORWARD -p 89 -j ACCEPT
 
-# Accept ICMPv6 only source for FORW to avoid capture of staff->router
-ip6tables -A INPUT -p icmpv6 -s $ROUT2 -j ACCEPT
-ip6tables -A OUTPUT -p icmpv6 -d $ROUT2 -j ACCEPT
-ip6tables -A FORWARD -p icmpv6 -s $ROUT2 -j ACCEPT
-ip6tables -A INPUT -p icmpv6 -s $ROUT3 -j ACCEPT
-ip6tables -A OUTPUT -p icmpv6 -d $ROUT3 -j ACCEPT
-ip6tables -A FORWARD -p icmpv6 -s $ROUT3 -j ACCEPT
+# Accept ICMPv6
+ip6tables -A INPUT -p icmpv6 -j ACCEPT
+ip6tables -A OUTPUT -p icmpv6 -j ACCEPT
+ip6tables -A FORWARD -p icmpv6 -j ACCEPT
 
 # Accept incomming and outgoing packet for DNS
 ip6tables -A INPUT -p tcp --dport 53 -s $SUB2 -j ACCEPT
 ip6tables -A OUTPUT -p tcp --dport 53 -d $SUB2 -j ACCEPT
+ip6tables -A FORWARD -p tcp --dport 53 -d $SUB2 -j ACCEPT
 ip6tables -A INPUT -p tcp --dport 53 -s $SUB3 -j ACCEPT
 ip6tables -A OUTPUT -p tcp --dport 53 -d $SUB3 -j ACCEPT
+ip6tables -A FORWARD -p tcp --dport 53 -d $SUB3 -j ACCEPT
 
 #
 # -------- ADMIN configuration
