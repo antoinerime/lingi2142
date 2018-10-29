@@ -88,12 +88,12 @@ ip6tables -A OUTPUT -p icmpv6 -j ACCEPT
 ip6tables -A FORWARD -p icmpv6 -j ACCEPT
 
 # Accept incomming and outgoing packet for DNS
-ip6tables -A INPUT -p tcp --dport 53 -s $SUB2 -j ACCEPT
-ip6tables -A OUTPUT -p tcp --dport 53 -d $SUB2 -j ACCEPT
-ip6tables -A FORWARD -p tcp --dport 53 -d $SUB2 -j ACCEPT
-ip6tables -A INPUT -p tcp --dport 53 -s $SUB3 -j ACCEPT
-ip6tables -A OUTPUT -p tcp --dport 53 -d $SUB3 -j ACCEPT
-ip6tables -A FORWARD -p tcp --dport 53 -d $SUB3 -j ACCEPT
+ip6tables -A INPUT -s $SUB2 -p tcp --dport 53 -j ACCEPT
+ip6tables -A OUTPUT -d $SUB2-p tcp --dport 53 -j ACCEPT
+ip6tables -A FORWARD -d $SUB2 -p tcp --dport 53 -j ACCEPT
+ip6tables -A INPUT -s $SUB3 -p tcp --dport 53 -j ACCEPT
+ip6tables -A OUTPUT -d $SUB3 -p tcp --dport 53 -j ACCEPT
+ip6tables -A FORWARD -d $SUB3 -p tcp --dport 53 -j ACCEPT
 
 #
 # -------- ADMIN configuration
