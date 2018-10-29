@@ -9,11 +9,20 @@ def wget_http_https():
     addr_list = ["http://www.google.com/" , "https://www.google.com"]
     for node in nodes:
       for addr in addr_list:
-          out, err, err_code = utils.execute_in_host("::1","wget " + addr)
+          out, err, err_code = utils.execute_in_host(node,"wget " + addr)
     if err_code:
-        print("Could not make a request to HTTP-HTTPS")
+        print(node, " -- Could not make a HTTP-HTTPS request")
         print(out)
         print(err)
-        
+
+def dig_test():
+    addr_list = ["google.com"]
+    for node in nodes:
+      for addr in addr_list:
+          out, err, err_code = utils.execute_in_host(,"dig " + addr)
+    if err_code:
+        print(node, " -- Could not make a DNS request")
+        print(out)
+        print(err)
 
 wget_http_https()
