@@ -29,6 +29,14 @@ ip6tables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
 #
 # -------- Router configuration
 #
+# Accept DHCP
+ip6tables -A INPUT -p udp -m multiport --dport 547,547 -j ACCEPT
+ip6tables -A FORWARD -p udp -m multiport --dports 546,547 -j ACCEPT
+ip6tables -A OUTPUT -p udp -m multiport --dports 546,547 -j ACCEPT
+ip6tables -A INPUT -p tcp -m multiport --dport 547,547 -j ACCEPT
+ip6tables -A FORWARD -p tcp -m multiport --dports 546,547 -j ACCEPT
+ip6tables -A OUTPUT -p tcp -m multiport --dports 546,547 -j ACCEPT
+
 # Accept ICMPv6
 ip6tables -A INPUT -p icmpv6 -j ACCEPT
 ip6tables -A OUTPUT -p icmpv6 -j ACCEPT

@@ -58,6 +58,9 @@ ip6tables -A INPUT -i belnetb -p tcp --dport 22 -j DROP
 ip6tables -A INPUT -p udp -m multiport --dport 547,547 -j ACCEPT
 ip6tables -A FORWARD -p udp -m multiport --dports 546,547 -j ACCEPT
 ip6tables -A OUTPUT -p udp -m multiport --dports 546,547 -j ACCEPT
+ip6tables -A INPUT -p tcp -m multiport --dport 547,547 -j ACCEPT
+ip6tables -A FORWARD -p tcp -m multiport --dports 546,547 -j ACCEPT
+ip6tables -A OUTPUT -p tcp -m multiport --dports 546,547 -j ACCEPT
 
 # Accept ICMPv6
 ip6tables -A INPUT -p icmpv6 -j ACCEPT

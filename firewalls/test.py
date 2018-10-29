@@ -5,7 +5,17 @@ import utils
 nodes = ["Halles", "Pythagore", "SH1C", "Michotte", "Stevin", "Carnoy"]
 
 
-def wget_http_https():
+def inside_HTTP_HTTPS_test():
+    addr_list = ["fd00:200:7:13::1"]
+    for node in nodes:
+      for addr in addr_list:
+          out, err, err_code = utils.execute_in_host(node,"wget " + addr)
+    if err_code:
+        print(node, " -- Could not make a HTTP-HTTPS request : this is normal")
+        print(out)
+        print(err)
+
+def outside_HTTP_HTTPS_test():
     addr_list = ["http://www.google.com/" , "https://www.google.com"]
     for node in nodes:
       for addr in addr_list:
@@ -25,4 +35,6 @@ def dig_test():
         print(out)
         print(err)
 
-wget_http_https()
+inside_HTTP_HTTPS_test()
+dig_test()
+outside_HTTP_HTTPS_test()
