@@ -150,6 +150,6 @@ ip6tables -A OUTPUT -p tcp --dport 22 -j ACCEPT
 ip6tables -A FORWARD -p tcp --dport 22 -j ACCEPT
 
 # Log
-ip6tables -A INPUT -j ULOG --ulog-prefix "++ [INPUT] Packet dropped ++ "
-ip6tables -A OUTPUT -j ULOG --ulog-prefix "++ [OUTPUT] Packet dropped ++ "
-ip6tables -A FORWARD -j ULOG --ulog-prefix "++ [FORWARD] Packet dropped ++ "
+ip6tables -A INPUT -j LOG
+ip6tables -A OUTPUT -j LOG
+ip6tables -A FORWARD -j LOG
