@@ -27,41 +27,7 @@ ip6tables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 ip6tables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 #
-# -------- Border configuration
-#
-# Block spoofed address from internet interface
-ip6tables -A INPUT -i belneta -s $SUB2 -j DROP
-ip6tables -A FORWARD -i belneta -s $SUB2 -j DROP
-ip6tables -A INPUT -i belneta -s $SUB3 -j DROP
-ip6tables -A FORWARD -i belneta -s $SUB3 -j DROP
-
-# Accept bgp (port:179 over tcp) in/out traffic from interface belneta
-ip6tables -A INPUT -i belneta -p tcp --dport 179 -j ACCEPT
-ip6tables -A OUTPUT -o belneta -p tcp --dport 179 -j ACCEPT
-
-# Block ospf (port:89) traffic from/to internet
-ip6tables -A INPUT -i belneta -p 89 -j DROP
-ip6tables -A OUTPUT -o belneta -p 89 -j DROP
-ip6tables -A FORWARD -i belneta -p 89 -j DROP
-ip6tables -A FORWARD -o belneta -p 89 -j DROP
-
-# Block SSH (port:22 over tcp) connection from outside
-ip6tables -A INPUT -i belneta -p tcp --dport 22 -j DROP
-
-# Block HTTP/HTTPS (port:80,443 over tcp) request from outside
-ip6tables -A INPUT -i belneta -p tcp -m multiport --dport 80,443 -j DROP
-
-# Block DHCPv6 (port:546,547 over udp) from/to Internet
-ip6tables -A INPUT -i belneta -p udp -m multiport --dports 546,547 -j DROP
-ip6tables -A OUTPUT -o belneta -p udp -m multiport --dports 546,547 -j DROP
-ip6tables -A FORWARD -i belneta -p udp -m multiport --dports 546,547 -j DROP
-ip6tables -A FORWARD -o belneta -p udp -m multiport --dports 546,547 -j DROP
-
-# Block SSH (port:22 over tcp) connection from outside
-ip6tables -A INPUT -i belnetb -p tcp --dport 22 -j DROP
-
-#
-# -------- ROUTER configuration + DNS Server
+# -------- Router configuration
 #
 # Accept DHCP
 ip6tables -A INPUT -p udp -m multiport --dport 547,547 -j ACCEPT
@@ -71,28 +37,23 @@ ip6tables -A INPUT -p tcp -m multiport --dport 547,547 -j ACCEPT
 ip6tables -A FORWARD -p tcp -m multiport --dports 546,547 -j ACCEPT
 ip6tables -A OUTPUT -p tcp -m multiport --dports 546,547 -j ACCEPT
 
-# Accept ospf (port:89) from inside the Network
-ip6tables -A INPUT -p 89 -j ACCEPT
-ip6tables -A OUTPUT -p 89 -j ACCEPT
-ip6tables -A FORWARD -p 89 -j ACCEPT
-
 # Accept ICMPv6
 ip6tables -A INPUT -p icmpv6 -j ACCEPT
 ip6tables -A OUTPUT -p icmpv6 -j ACCEPT
 ip6tables -A FORWARD -p icmpv6 -j ACCEPT
 
-# Accept incomming and outgoing packet for DNS
-ip6tables -A INPUT -p tcp --dport 53 -s $SUB2 -j ACCEPT
-ip6tables -A OUTPUT -p tcp --dport 53 -d $SUB2 -j ACCEPT
+# Accept ospf (port:89) from inside the Network
+ip6tables -A INPUT -p 89 -j ACCEPT
+ip6tables -A OUTPUT -p 89 -j ACCEPT
+ip6tables -A FORWARD -p 89 -j ACCEPT
+
+# Accept Forwarding DNS queries/answers
 ip6tables -A FORWARD -p tcp --dport 53 -d $SUB2 -j ACCEPT
-ip6tables -A INPUT -p tcp --dport 53 -s $SUB3 -j ACCEPT
-ip6tables -A OUTPUT -p tcp --dport 53 -d $SUB3 -j ACCEPT
 ip6tables -A FORWARD -p tcp --dport 53 -d $SUB3 -j ACCEPT
 
 #
 # -------- ADMIN configuration
 #
-
 # Accept everything for/from administrators
 ip6tables -A INPUT -s $ADMIN2 -j ACCEPT
 ip6tables -A INPUT -s $ADMIN3 -j ACCEPT
@@ -142,15 +103,10 @@ ip6tables -A FORWARD --src $GUEST3 -p tcp -m multiport --dports 53,80,443 -j ACC
 ip6tables -A FORWARD --src $STAFF2 -p tcp --dport 515 -j ACCEPT
 ip6tables -A FORWARD --src $STAFF3 -p tcp --dport 515 -j ACCEPT
 
-# Accept SNMP  protocol (experimental)
+# Accept SNMP  protocol
 ip6tables -A INPUT -p udp --dport 161 -j ACCEPT
 ip6tables -A OUTPUT -p udp --dport 161 -j ACCEPT
 ip6tables -A FORWARD -p udp --dport 161 -j ACCEPT
-
-# Accept SSH connection (port:22) (to be filtered: A)
-ip6tables -A INPUT -p tcp --dport 22 -j ACCEPT
-ip6tables -A OUTPUT -p tcp --dport 22 -j ACCEPT
-ip6tables -A FORWARD -p tcp --dport 22 -j ACCEPT
 
 # Log
 ip6tables -A INPUT -j LOG
