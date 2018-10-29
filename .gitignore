@@ -2,3 +2,11 @@
 tags
 gr7_cfg/*/alternatives
 alternatives
+gr7_cf/*/mtab
+gr7_cfg/*/group
+gr7_cfg/*/passwd
+gr7_cfg/*/hostname
+gr7_cfg/*/services
+gr7_cfg/*/hosts
+gr7_cfg/*/manpath.config
+
