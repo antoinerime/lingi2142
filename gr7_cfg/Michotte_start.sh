@@ -12,3 +12,4 @@ puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /et
 # echo "[MICH] setting firewall"
 # firewalls/./INTERN.sh
 # echo "[MICH] firewall set"
+radvd -C /etc/radvd.conf

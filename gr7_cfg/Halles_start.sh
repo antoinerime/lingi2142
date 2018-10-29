@@ -29,3 +29,4 @@ ip -6 route add default dev tun-Pyth table 300
 # echo "[HALL] setting firewall"
 # firewalls/./HALL.sh
 # echo "[HALL] firewall set"
+radvd -C /etc/radvd.conf

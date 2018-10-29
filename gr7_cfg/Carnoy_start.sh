@@ -20,3 +20,5 @@ puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /et
 # echo "[CARN] setting firewall"
 # firewalls/./INTERN.sh
 # echo "[CARN] firewall set"
+
+radvd -C /etc/radvd.conf

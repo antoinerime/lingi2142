@@ -34,3 +34,5 @@ ip -6 route add default via fd00:300::b table 300
 # echo "[PYTH] setting firewall"
 # firewalls/./PYTH.sh
 # echo "[PYTH] firewall set"
+
+radvd -C /etc/radvd.conf
