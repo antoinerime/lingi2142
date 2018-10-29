@@ -81,12 +81,12 @@ for i in  ${file[*]}
         done
 ###############
 
-for i in  ${IP6_Node[*]}
-	do
-echo "agentAddress udp6:["$i"]:161" >> /etc/snmp/snmpd.conf
+#for i in  ${IP6_Node[*]}
+#	do
+#echo "agentAddress udp6:["$i"]:161" >> /etc/snmp/snmpd.conf
 
 
-done
+#done
 
 #copie snmp folder to the node
 echo "[INFO-gr7_cfg] create nagios configuration files for nodes"
