@@ -9,4 +9,5 @@ gr7_cfg/*/hostname
 gr7_cfg/*/services
 gr7_cfg/*/hosts
 gr7_cfg/*/manpath.config
+gr7_cfg/*/bird
 
