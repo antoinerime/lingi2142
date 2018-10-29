@@ -27,6 +27,7 @@ PREFIXBASE_as200="fd00:200:${GROUPNUMBER}::/${PREFIXLEN_as200}"
 # in you boot and startup scripts
 # e.g. "${PREFIXBASE}:1234::/$((PREFIXLEN+16))"
 
+
 # This function describes the network topology that we want to emulate
 function mk_topo {
     echo "@@ Adding links and nodes"
@@ -47,6 +48,34 @@ function mk_topo {
   #  mk_LAN Carnoy MONIT
     mk_LAN Pythagore ADNS01 RDNS01 DHCP01
     mk_LAN Carnoy ADNS02 RDNS02 DHCP02 MONIT
+    mk_LAN Pythagore
+    mk_LAN Pythagore
+    mk_LAN Pythagore
+    mk_LAN Pythagore
+    mk_LAN Carnoy
+    mk_LAN Carnoy
+    mk_LAN Carnoy
+    mk_LAN Carnoy
+    mk_LAN Halles
+    mk_LAN Halles
+    mk_LAN Halles
+    mk_LAN Halles
+    mk_LAN Halles
+    mk_LAN SH1C
+    mk_LAN SH1C
+    mk_LAN SH1C
+    mk_LAN SH1C
+    mk_LAN SH1C
+    mk_LAN Stevin
+    mk_LAN Stevin
+    mk_LAN Stevin
+    mk_LAN Stevin
+    mk_LAN Stevin
+    mk_LAN Michotte
+    mk_LAN Michotte
+    mk_LAN Michotte
+    mk_LAN Michotte
+    mk_LAN Michotte
 
     echo "@@ Bridging the network"
     # Connect to belneta and belnetb

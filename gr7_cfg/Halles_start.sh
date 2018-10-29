@@ -17,9 +17,19 @@ ip -6 addr add fd00:200::7/48 dev belnetb
 
 ip addr add fd00:200:7:13::1/64 dev Halles-eth0
 ip addr add fd00:200:7:12::1/64 dev Halles-eth1
+ip addr add fd00:200:7:10::/64 dev Halles-lan0
+ip addr add fd00:200:7:1010::/64 dev Halles-lan1
+ip addr add fd00:200:7:2010::/64 dev Halles-lan2
+ip addr add fd00:200:7:3010::/64 dev Halles-lan3
+ip addr add fd00:200:7:4010::/64 dev Halles-lan4
 
 ip addr add fd00:300:7:13::1/64 dev Halles-eth0
 ip addr add fd00:300:7:12::1/64 dev Halles-eth1
+ip addr add fd00:300:7:10::/64 dev Halles-lan0
+ip addr add fd00:300:7:1010::/64 dev Halles-lan1
+ip addr add fd00:300:7:2010::/64 dev Halles-lan2
+ip addr add fd00:300:7:3010::/64 dev Halles-lan3
+ip addr add fd00:300:7:4010::/64 dev Halles-lan4
 
 puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /etc/puppet/site.pp --modulepath=/puppetmodules
 
@@ -31,4 +41,4 @@ ip -6 route add default dev tun-Pyth table 300
 # echo "[HALL] firewall set"
 radvd -C /etc/radvd.conf
 
-dhcrelay -q -6 -l Halles-lan0 -u fd00:200:7:2a::a%Halles-eth0 -u fd00:200:7:2a::a%Halles-eth1 -u fd00:300:7:2a::a%Halles-eth0 -u fd00:300:7:2a::a%Halles-eth1
+dhcrelay -q -6 -l Halles-lan0 -l Halles-lan1 -l Halles-lan2 -l Halles-lan3 -l Halles-lan4 -u fd00:200:7:2a::a%Halles-eth0 -u fd00:200:7:2a::a%Halles-eth1 -u fd00:300:7:2a::a%Halles-eth0 -u fd00:300:7:2a::a%Halles-eth1
