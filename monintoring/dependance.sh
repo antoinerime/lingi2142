@@ -124,7 +124,7 @@ echo "[INFO-gr7_cfg] Restarting the nagios service"
 echo "[INFO-gr7_cfg] Restarting the nrpe service"
 /etc/init.d/nagios-nrpe-server restart
 
-echo "[INFO-gr7_cfg] Restarting the snmp service"
-/etc/init.d/snmpd restart
+#echo "[INFO-gr7_cfg] Restarting the snmp service"
+#/etc/init.d/snmpd restart
 
 echo "[FIN INSTALATION AND CONFIGURATION MONINTORING SERVICE :GROUPE7] Termined"
