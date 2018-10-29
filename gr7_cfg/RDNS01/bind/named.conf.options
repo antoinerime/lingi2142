@@ -21,6 +21,10 @@ options {
 
 	forwarders {
 		fd00::d;
+		fd00:200:7:27::7;
+		fd00:200:7:57::7;
+		fd00:300:7:27::7;
+		fd00:300:7:57::7;
 	};
 	forward only;
 
