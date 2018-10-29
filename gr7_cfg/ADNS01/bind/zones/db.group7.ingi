@@ -3,11 +3,12 @@
 ;
 $TTL	604800
 @	IN	SOA	ns1.group7.ingi. admin.group7.ingi. (
-		     2018102401		; Serial
-			 604800		; Refresh
-			  86400		; Retry
-			2419200		; Expire
-			 604800 )	; Negative Cache TTL
+		     2018102901		; Serial
+          28800 ; Refresh     8 hours
+           7200 ; Retry       2 hours
+         604800 ; Expire      7 days
+          86400 ; Minimum TTL 1 day
+	)
 ;
 ; Name servers
 group7.ingi.	IN	NS	ns1.group7.ingi.

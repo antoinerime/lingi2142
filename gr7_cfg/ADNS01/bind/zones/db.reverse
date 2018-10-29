@@ -6,11 +6,11 @@
 ;
 $TTL 1h	; Default TTL
 @	IN	SOA	group7.ingi.	admin.group7.ingi. (
-	2018102401	; serial
-	1h		; slave refresh interval
-	15m		; slave retry interval
-	1w		; slave copy expire time
-	1h		; NXDOMAIN cache time
+		     2018102901		; Serial
+          28800 ; Refresh     8 hours
+           7200 ; Retry       2 hours
+         604800 ; Expire      7 days
+          86400 ; Minimum TTL 1 day
 	)
 
 ;
