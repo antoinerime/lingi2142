@@ -19,12 +19,14 @@ ip addr add fd00:200:7:25::2/64 dev Pythagore-eth1
 ip addr add fd00:200:7:26::2/64 dev Pythagore-eth2
 ip addr add fd00:200:7:27::2/64 dev Pythagore-lan0
 ip addr add fd00:200:7:29::2/64 dev Pythagore-lan0
+ip addr add fd00:200:7:2a::2/64 dev Pythagore-lan0
 
 ip addr add fd00:300:7:12::2/64 dev Pythagore-eth0
 ip addr add fd00:300:7:25::2/64 dev Pythagore-eth1
 ip addr add fd00:300:7:26::2/64 dev Pythagore-eth2
 ip addr add fd00:300:7:27::2/64 dev Pythagore-lan0
 ip addr add fd00:300:7:29::2/64 dev Pythagore-lan0
+ip addr add fd00:300:7:2a::2/64 dev Pythagore-lan0
 
 puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /etc/puppet/site.pp --modulepath=/puppetmodules
 
@@ -34,3 +36,7 @@ ip -6 route add default via fd00:300::b table 300
 # echo "[PYTH] setting firewall"
 # firewalls/./PYTH.sh
 # echo "[PYTH] firewall set"
+
+radvd -C /etc/radvd.conf
+
+dhcrelay -6 -l Pythagore-lan0 -u fd00:200:7:5a::a%Pythagore-eth0 -u fd00:200:7:5a::a%Pythagore-eth1 -u fd00:200:7:5a::a%Pythagore-eth2 -u fd00:300:7:5a::a%Pythagore-eth0 -u fd00:300:7:5a::a%Pythagore-eth1 -u fd00:300:7:5a::a%Pythagore-eth2 -u fd00:200:7:2a::a%Pythagore-lan0 -u fd00:300:7:2a::a%Pythagore-lan0
