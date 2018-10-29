@@ -27,9 +27,9 @@ ip addr add fd00:300:7:4050::/64 dev Carnoy-lan4
 
 puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /etc/puppet/site.pp --modulepath=/puppetmodules
 
-# echo "[CARN] setting firewall"
-# firewalls/./INTERN.sh
-# echo "[CARN] firewall set"
+echo "[CARN] setting firewall"
+firewalls/./CARN.sh
+echo "[CARN] firewall set"
 
 radvd -C /etc/radvd.conf
 
