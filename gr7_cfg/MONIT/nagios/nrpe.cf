@@ -1,1 +1,0 @@
-command[check_memory]=/usr/lib/nagios/plugins/check_memory.pl -w $ -c $ -M $
