@@ -1,2 +1,4 @@
 .vagrant
 tags
+gr7_cfg/*/alternatives
+alternatives
