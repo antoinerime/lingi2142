@@ -15,4 +15,5 @@ puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /et
 # echo "[SH1C] firewall set"
 
 radvd -C /etc/radvd.conf
-radvd -C /etc/radvd.conf
+
+dhcrelay -q -6 -l SH1C-lan0 -u fd00:200:7:2a::a%SH1C-eth0 -u fd00:200:7:2a::a%SH1C-eth1 -u fd00:300:7:2a::a%SH1C-eth0 -u fd00:300:7:2a::a%SH1C-eth1

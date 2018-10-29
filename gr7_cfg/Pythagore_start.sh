@@ -38,3 +38,5 @@ ip -6 route add default via fd00:300::b table 300
 # echo "[PYTH] firewall set"
 
 radvd -C /etc/radvd.conf
+
+dhcrelay -6 -l Pythagore-lan0 -u fd00:200:7:5a::a%Pythagore-eth0 -u fd00:200:7:5a::a%Pythagore-eth1 -u fd00:200:7:5a::a%Pythagore-eth2 -u fd00:300:7:5a::a%Pythagore-eth0 -u fd00:300:7:5a::a%Pythagore-eth1 -u fd00:300:7:5a::a%Pythagore-eth2 -u fd00:200:7:2a::a%Pythagore-lan0 -u fd00:300:7:2a::a%Pythagore-lan0

@@ -13,3 +13,5 @@ puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /et
 # firewalls/./INTERN.sh
 # echo "[STEV] firewall set"
 radvd -C /etc/radvd.conf
+
+dhcrelay -q -6 -l Stevin-lan0 -u fd00:200:7:2a::a%Stevin-eth0 -u fd00:200:7:2a::a%Stevin-eth1 -u fd00:300:7:2a::a%Stevin-eth0 -u fd00:300:7:2a::a%Stevin-eth1

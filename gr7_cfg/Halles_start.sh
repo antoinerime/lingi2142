@@ -30,3 +30,5 @@ ip -6 route add default dev tun-Pyth table 300
 # firewalls/./HALL.sh
 # echo "[HALL] firewall set"
 radvd -C /etc/radvd.conf
+
+dhcrelay -q -6 -l Halles-lan0 -u fd00:200:7:2a::a%Halles-eth0 -u fd00:200:7:2a::a%Halles-eth1 -u fd00:300:7:2a::a%Halles-eth0 -u fd00:300:7:2a::a%Halles-eth1
