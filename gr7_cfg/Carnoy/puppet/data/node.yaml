@@ -6,5 +6,9 @@ bird6::ospfv3:
     - Carnoy-eth0
     - Carnoy-eth1
     - Carnoy-eth2
-  stub_itfs: 
+  stub_itfs:
     - Carnoy-lan0 # Passive interfaces (e.g., LANs)
+    - Carnoy-lan1
+    - Carnoy-lan2
+    - Carnoy-lan3
+    - Carnoy-lan4

@@ -9,6 +9,10 @@ bird6::ospfv3:
   stub_itfs:
     - Pythagore-lan0 # Passive interfaces (e.g., LANs)
     - tun-Hal
+    - Pythagore-lan1
+    - Pythagore-lan2
+    - Pythagore-lan3
+    - Pythagore-lan4
 bird6::bgp:
   static_bgp:
     - route fd00:300:7::/48 reject

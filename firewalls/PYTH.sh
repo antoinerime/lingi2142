@@ -63,6 +63,12 @@ ip6tables -A INPUT -i belnetb -p tcp --dport 22 -j DROP
 #
 # -------- ROUTER configuration + DNS Server
 #
+#Accept Tunnel protocol
+ip6tables -A FORWARD -s fd00:200:7:11::1 -d fd00:200:7:22::2 -j ACCEPT
+ip6tbales -A FORWARD -s fd00:200:7:22::2 -d fd00:200:7:11::1 -j ACCEP
+ip6tables -A INPUT -s fd00:200:22::2 -d fd00:7:11::1 -j ACCEPT
+ip6tables -A OUTPUT -d fd00:200:11::1 -j ACCEPT
+
 # Accept DHCP
 ip6tables -A INPUT -p udp -m multiport --dport 547,547 -j ACCEPT
 ip6tables -A FORWARD -p udp -m multiport --dports 546,547 -j ACCEPT
@@ -82,12 +88,12 @@ ip6tables -A OUTPUT -p icmpv6 -j ACCEPT
 ip6tables -A FORWARD -p icmpv6 -j ACCEPT
 
 # Accept incomming and outgoing packet for DNS
-ip6tables -A INPUT -p tcp --dport 53 -s $SUB2 -j ACCEPT
-ip6tables -A OUTPUT -p tcp --dport 53 -d $SUB2 -j ACCEPT
-ip6tables -A FORWARD -p tcp --dport 53 -d $SUB2 -j ACCEPT
-ip6tables -A INPUT -p tcp --dport 53 -s $SUB3 -j ACCEPT
-ip6tables -A OUTPUT -p tcp --dport 53 -d $SUB3 -j ACCEPT
-ip6tables -A FORWARD -p tcp --dport 53 -d $SUB3 -j ACCEPT
+ip6tables -A INPUT -s $SUB2 -p tcp --dport 53 -j ACCEPT
+ip6tables -A OUTPUT -d $SUB2-p tcp --dport 53 -j ACCEPT
+ip6tables -A FORWARD -d $SUB2 -p tcp --dport 53 -j ACCEPT
+ip6tables -A INPUT -s $SUB3 -p tcp --dport 53 -j ACCEPT
+ip6tables -A OUTPUT -d $SUB3 -p tcp --dport 53 -j ACCEPT
+ip6tables -A FORWARD -d $SUB3 -p tcp --dport 53 -j ACCEPT
 
 #
 # -------- ADMIN configuration
