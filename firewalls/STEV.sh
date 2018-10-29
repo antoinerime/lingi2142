@@ -31,7 +31,7 @@ ip6tables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
 #
 #Accept Tunnel protocol
 ip6tables -A FORWARD -s fd00:200:7:11::1 -d fd00:200:7:22::2 -j ACCEPT
-ip6tbales -A FORWARD -s fd00:200:7:22::2 -d fd00:200:7:11::1 -j ACCEP
+ip6tbales -A FORWARD -s fd00:200:7:22::2 -d fd00:200:7:11::1 -j ACCEPT
 
 # Accept DHCP
 ip6tables -A INPUT -p udp -m multiport --dport 547,547 -j ACCEPT
