@@ -7,6 +7,11 @@ bird6::ospfv3:
     - Halles-eth1
   stub_itfs:  # Passive interfaces (e.g., LANs)
     - tun-Pyth
+    - Halles-lan0 
+    - Halles-lan1
+    - Halles-lan2
+    - Halles-lan3
+    - Halles-lan4
 bird6::main_bgp: true
 bird6::bgp:
   static_bgp:
