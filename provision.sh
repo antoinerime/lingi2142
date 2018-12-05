@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export DEBIAN_FRONTEND=noninteractive
 apt-get -y -qq --force-yes update
 #apt-get -y -qq --force-yes install build-essential checkinstall
 #if !which cmake; then
@@ -32,4 +32,6 @@ service bird6 stop
 
 (cd /sbin && ln -s /usr/lib/quagga/* .)
 
-su vagrant -c 'cd && git clone https://github.com/UCL-INGI/lingi2142.git'
+#su vagrant -c 'cd && git clone https://github.com/antoinerime/lingi2142.git'
+su vagrant -c 'cd && cp -r /vagrant lingi2142'
+
