@@ -19,9 +19,9 @@ ip addr add fd00:300:7:3060::/64 dev Stevin-lan3
 ip addr add fd00:300:7:4060::/64 dev Stevin-lan4
 puppet apply --verbose --parser future --hiera_config=/etc/puppet/hiera.yaml /etc/puppet/site.pp --modulepath=/puppetmodules
 
-echo "[STEV] setting firewall"
-firewalls/./STEV.sh
-echo "[STEV] firewall set"
+#echo "[STEV] setting firewall"
+#firewalls/./STEV.sh
+#echo "[STEV] firewall set"
 
 radvd -C /etc/radvd.conf
 
