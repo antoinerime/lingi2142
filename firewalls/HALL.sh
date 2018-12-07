@@ -61,7 +61,7 @@ ip6tables -A FORWARD -i belnetb -p 89 -j DROP
 ip6tables -A FORWARD -o belnetb -p 89 -j DROP
 
 # Block HTTP/HTTPS (port:80,443 over tcp) request from outside
-ip6tables -A INPUT -i belnetb -p tcp -m multiport --dports 80,443 -j DROP
+ip6tables -A INPUT -i belnetb -p tcp -m multiport --dports 80,443 -j REJECT
 
 # Block DHCPv6 (port:546,547 over udp) from/to Internet
 ip6tables -A INPUT -i belnetb -p udp -m multiport --dports 546,547 -j DROP
@@ -80,11 +80,6 @@ ip6tables -A OUTPUT -p udp -m multiport --dports 546,547 -j ACCEPT
 ip6tables -A INPUT -p tcp -m multiport --dports 546,547 -j ACCEPT
 ip6tables -A FORWARD -p tcp -m multiport --dports 546,547 -j ACCEPT
 ip6tables -A OUTPUT -p tcp -m multiport --dports 546,547 -j ACCEPT
-
-# Accept ICMPv6
-ip6tables -A INPUT -p icmpv6 -j ACCEPT
-ip6tables -A OUTPUT -p icmpv6 -j ACCEPT
-ip6tables -A FORWARD -p icmpv6 -j ACCEPT
 
 # Accept ospf (port:89) from inside the Network
 ip6tables -A INPUT -p 89 -j ACCEPT
@@ -185,6 +180,12 @@ ip6tables -A FORWARD --src $GUEST3 -p udp --dport 53 -j ACCEPT
 # Accept staff to send print job to a remote printer
 ip6tables -A FORWARD --src $STAFF2 -p tcp --dport 515 -j ACCEPT
 ip6tables -A FORWARD --src $STAFF3 -p tcp --dport 515 -j ACCEPT
+
+
+# Accept ICMPv6
+ip6tables -A INPUT -p icmpv6 -j ACCEPT
+ip6tables -A OUTPUT -p icmpv6 -j ACCEPT
+ip6tables -A FORWARD -p icmpv6 -j ACCEPT
 
 # Accept http/https input in case we will add a website in this Server
 ip6tables -A INPUT -p tcp -m multiport --dports 80,443 -j REJECT

@@ -44,11 +44,6 @@ ip6tables -A INPUT -p tcp -m multiport --dports 546,547 -j ACCEPT
 ip6tables -A FORWARD -p tcp -m multiport --dports 546,547 -j ACCEPT
 ip6tables -A OUTPUT -p tcp -m multiport --dports 546,547 -j ACCEPT
 
-# Accept ICMPv6
-ip6tables -A INPUT -p icmpv6 -j ACCEPT
-ip6tables -A OUTPUT -p icmpv6 -j ACCEPT
-ip6tables -A FORWARD -p icmpv6 -j ACCEPT
-
 # Accept ospf (port:89) from inside the Network
 ip6tables -A INPUT -p 89 -j ACCEPT
 ip6tables -A OUTPUT -p 89 -j ACCEPT
@@ -145,6 +140,12 @@ ip6tables -A FORWARD --src $GUEST3 -p udp --dport 53 -j ACCEPT
 # Accept staff to send print job to a remote printer
 ip6tables -A FORWARD --src $STAFF2 -p tcp --dport 515 -j ACCEPT
 ip6tables -A FORWARD --src $STAFF3 -p tcp --dport 515 -j ACCEPT
+
+
+# Accept ICMPv6
+ip6tables -A INPUT -p icmpv6 -j ACCEPT
+ip6tables -A OUTPUT -p icmpv6 -j ACCEPT
+ip6tables -A FORWARD -p icmpv6 -j ACCEPT
 
 # Accept Forwarding DNS queries/answers from outside too
 ip6tables -A FORWARD -p udp --dport 53 -j ACCEPT
