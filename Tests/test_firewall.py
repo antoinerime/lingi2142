@@ -29,7 +29,7 @@ def dig_test():
     addr_list = ["google.com"]
     for node in nodes:
       for addr in addr_list:
-          out, err, err_code = utils.execute_in_host(,"dig " + addr)
+          out, err, err_code = utils.execute_in_host(node,"dig " + addr)
     if err_code:
         print(node, " -- Could not make a DNS request")
         print(out)

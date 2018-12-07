@@ -187,6 +187,9 @@ ip6tables -A FORWARD --src $GUEST3 -p udp --dport 53 -j ACCEPT
 ip6tables -A FORWARD --src $STAFF2 -p tcp --dport 515 -j ACCEPT
 ip6tables -A FORWARD --src $STAFF3 -p tcp --dport 515 -j ACCEPT
 
+# Accept http/https input in case we will add a website in this Server
+ip6tables -A INPUT -p tcp -m multiport --dports 80,443 -j REJECT
+
 # Accept Forwarding DNS queries/answers from outside too
 ip6tables -A FORWARD -p udp --dport 53 -j ACCEPT
 # Accept Output DNS to allow testing from router
