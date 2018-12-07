@@ -55,10 +55,8 @@ ip6tables -A OUTPUT -p 89 -j ACCEPT
 ip6tables -A FORWARD -p 89 -j ACCEPT
 
 # Accept forwarding, incomming and outgoing packet for DNS (router is DNS serv)
-ip6tables -A INPUT -s $SUB2 -p udp --dport 53 -j ACCEPT
-ip6tables -A OUTPUT -d $SUB2 -p udp --dport 53 -j ACCEPT
-ip6tables -A INPUT -s $SUB3 -p udp --dport 53 -j ACCEPT
-ip6tables -A OUTPUT -d $SUB3 -p udp --dport 53 -j ACCEPT
+ip6tables -A INPUT -p udp --dport 53 -j ACCEPT
+ip6tables -A OUTPUT -p udp --dport 53 -j ACCEPT
 
 #
 # -------- ADMIN configuration
@@ -153,7 +151,7 @@ ip6tables -A FORWARD --src $GUEST3 -p udp --dport 53 -j ACCEPT
 ip6tables -A FORWARD --src $STAFF2 -p tcp --dport 515 -j ACCEPT
 ip6tables -A FORWARD --src $STAFF3 -p tcp --dport 515 -j ACCEPT
 
-# Accept Forwarding DNS queries/answers
+# Accept Forwarding DNS queries/answers from outside too
 ip6tables -A FORWARD -p udp --dport 53 -j ACCEPT
 # Accept Output DNS to allow testing from router
 ip6tables -A OUTPUT -p udp --dport 53 -j ACCEPT
@@ -162,6 +160,11 @@ ip6tables -A OUTPUT -p udp --dport 53 -j ACCEPT
 ip6tables -A INPUT -p udp -m multiport --dports 161,162 -j ACCEPT
 ip6tables -A OUTPUT -p udp -m multiport --dports 161,162 -j ACCEPT
 ip6tables -A FORWARD -p udp -m multiport --dports 161,162 -j ACCEPT
+
+# Accept traceroute tool
+ip6tables -A INPUT -p udp --dport 33434:33534 -j ACCEPT
+ip6tables -A FORWARD -p udp --dport 33434:33534 -j ACCEPT
+ip6tables -A OUTPUT -p udp --dport 33434:33534 -j ACCEPT
 
 # Log
 ip6tables -A INPUT -j LOG
