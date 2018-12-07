@@ -32,6 +32,9 @@ ip6tables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
 #
 
 #Accept Tunnel protocol
+ip6tables  -A INPUT -p 41 -j ACCEPT
+ip6tables  -A FORWARD -p 41 -j ACCEPT
+ip6tables  -A OUTPUT -p 41 -j ACCEPT
 ip6tables -A FORWARD -s fd00:200:7:11::1 -d fd00:200:7:22::2 -j ACCEPT
 ip6tables -A FORWARD -s fd00:200:7:22::2 -d fd00:200:7:11::1 -j ACCEPT
 ip6tables -A INPUT -s fd00:200:7:11::1 -d fd00:200:7:22::2 -j ACCEPT
@@ -186,9 +189,8 @@ ip6tables -A FORWARD --src $GUEST3 -p udp --dport 53 -j ACCEPT
 ip6tables -A FORWARD --src $STAFF2 -p tcp --dport 515 -j ACCEPT
 ip6tables -A FORWARD --src $STAFF3 -p tcp --dport 515 -j ACCEPT
 
-# Accept Forwarding DNS queries/answers (at the bottom to avoid catch with user rules)
-ip6tables -A FORWARD -d $SUB2 -p udp --dport 53 -j ACCEPT
-ip6tables -A FORWARD -d $SUB3 -p udp --dport 53 -j ACCEPT
+# Accept Forwarding DNS queries/answers
+ip6tables -A FORWARD -p udp --dport 53 -j ACCEPT
 # Accept Output DNS to allow testing from router
 ip6tables -A OUTPUT -p udp --dport 53 -j ACCEPT
 
