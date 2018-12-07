@@ -147,6 +147,8 @@ ip6tables -A FORWARD --src $STAFF3 -p tcp --dport 515 -j ACCEPT
 # Accept Forwarding DNS queries/answers (at the bottom to avoid catch with user rules)
 ip6tables -A FORWARD -d $SUB2 -p udp --dport 53 -j ACCEPT
 ip6tables -A FORWARD -d $SUB3 -p udp --dport 53 -j ACCEPT
+# Accept Output DNS to allow testing from router
+ip6tables -A OUTPUT -p udp --dport 53 -j ACCEPT
 
 # Accept SNMP  protocol (request and response on udp)
 ip6tables -A INPUT -p udp -m multiport --dports 161,162 -j ACCEPT
